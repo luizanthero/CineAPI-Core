@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CineAPI</name>
+    </assembly>
+    <members>
+        <member name="M:CineAPI.Controllers.TesteController.Get">
+            <summary>
+            teste teste
+            </summary>
+            <returns>retorna teste</returns>
+        </member>
+    </members>
+</doc>

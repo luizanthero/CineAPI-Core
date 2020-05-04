@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CineAPI.DAL", "CineAPI.DAL\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CineAPI.Domain", "CineAPI.Domain\CineAPI.Domain.csproj", "{A52904BD-32F5-48C1-BF08-CE5E7F60B77A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CineAPI.Business", "CineAPI.Business\CineAPI.Business.csproj", "{328F45EF-2FF9-4514-9B5E-431D18E15A01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A52904BD-32F5-48C1-BF08-CE5E7F60B77A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A52904BD-32F5-48C1-BF08-CE5E7F60B77A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A52904BD-32F5-48C1-BF08-CE5E7F60B77A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{328F45EF-2FF9-4514-9B5E-431D18E15A01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{328F45EF-2FF9-4514-9B5E-431D18E15A01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{328F45EF-2FF9-4514-9B5E-431D18E15A01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{328F45EF-2FF9-4514-9B5E-431D18E15A01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

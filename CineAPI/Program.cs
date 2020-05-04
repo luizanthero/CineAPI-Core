@@ -20,6 +20,7 @@ namespace CineAPI
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseUrls("https://0.0.0.0:5001");
                     webBuilder.UseStartup<Startup>();
                 });
     }

@@ -94,5 +94,14 @@
             <response code="200">Success</response>
             <response code="500">Internal Error</response>
         </member>
+        <member name="M:CineAPI.Controllers.FilmsController.DeleteFilm(System.Int32)">
+            <summary>
+            Delete a Film by Id
+            </summary>
+            <param name="id"></param>
+            <returns>Return a Film deleted</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
     </members>
 </doc>

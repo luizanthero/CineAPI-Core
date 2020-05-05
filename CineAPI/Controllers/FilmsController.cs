@@ -180,6 +180,7 @@ namespace CineAPI.Controllers
         /// <returns>Return a Film deleted</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFilm(int id)
         {
             if (await business.DeleteById(id))

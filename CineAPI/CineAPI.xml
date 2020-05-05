@@ -10,11 +10,5 @@
             </summary>
             <returns>Return all Films</returns>
         </member>
-        <member name="M:CineAPI.Controllers.TesteController.Get">
-            <summary>
-            teste teste
-            </summary>
-            <returns>retorna teste</returns>
-        </member>
     </members>
 </doc>

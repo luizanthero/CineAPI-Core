@@ -95,7 +95,12 @@ namespace CineAPI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "/swagger/index.html");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            app.Run(async context =>
+            {
+                context.Response.Redirect("/swagger/index.html");
             });
         }
     }

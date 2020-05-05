@@ -49,7 +49,7 @@ namespace CineAPI
                     {
                         Version = "v1",
                         Title = "CineAPI - .Net Core",
-                        Description = "API in .Net Core with Swagger",
+                        Description = "API in .Net Core 3.0 with Swagger",
                         Contact = new OpenApiContact
                         {
                             Name = "Luiz Anthero Gama",

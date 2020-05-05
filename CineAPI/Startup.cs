@@ -49,11 +49,11 @@ namespace CineAPI
                     {
                         Version = "v1",
                         Title = "CineAPI - .Net Core",
-                        Description = "teste",
+                        Description = "API in .Net Core with Swagger",
                         Contact = new OpenApiContact
                         {
                             Name = "Luiz Anthero Gama",
-                            Email = "",
+                            Email = "luizanthero@icloud.com",
                             Url = new Uri("https://github.com/luizanthero")
                         }
                     });

@@ -15,7 +15,7 @@ namespace CineAPI.Models
         public string Description { get; set; }
 
         [DefaultValue(true)]
-        public bool IsActived { get; set; }
+        public bool IsActived { get; set; } = true;
 
         public DateTime created_at { get; set; }
 

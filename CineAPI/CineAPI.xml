@@ -12,6 +12,16 @@
             <response code="200">Success</response>
             <response code="500">Internal Error</response>
         </member>
+        <member name="M:CineAPI.Controllers.FilmsController.GetFilmsPaginate(System.Int32,System.Int32)">
+            <summary>
+            Get all Films createds with pagination
+            </summary>
+            <param name="page"></param>
+            <param name="limitPage"></param>
+            <returns>Return all Films</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
         <member name="M:CineAPI.Controllers.FilmsController.GetFilm(System.Int32)">
             <summary>
             Get a Film by Id
@@ -21,12 +31,29 @@
             <response code="200">Success</response>
             <response code="500">Internal Error</response>
         </member>
-        <member name="M:CineAPI.Controllers.FilmsController.GetComboBoxName(System.String)">
+        <member name="M:CineAPI.Controllers.FilmsController.GetByName(System.String)">
             <summary>
-            Get a Film by Name
+            Get Films with same Name
             </summary>
             <param name="name"></param>
+            <returns>Return Films</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.FilmsController.GetByApiCode(System.String)">
+            <summary>
+            Get a Film by ApiCode
+            </summary>
+            <param name="apiCode"></param>
             <returns>Return a Film</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.FilmsController.GetComboBox">
+            <summary>
+            Get all Films in a ComboBox (Id, Value)
+            </summary>
+            <returns>Return a Films's ComboBox</returns>
             <response code="200">Success</response>
             <response code="500">Internal Error</response>
         </member>
@@ -45,6 +72,25 @@
             </remarks>
             <param name="film"></param>
             <returns>Return a Film created</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.FilmsController.PutFilm(System.Int32,CineAPI.Models.Film)">
+            <summary>
+            Update a Film by Id
+            </summary>
+            <remarks>
+            Sample request:
+                
+                {
+                    "Name": "Wonder Woman",
+                    "ApiCode": "tt0451279"
+                }
+                
+            </remarks>
+            <param name="id"></param>
+            <param name="film"></param>
+            <returns>Return a Film updated</returns>
             <response code="200">Success</response>
             <response code="500">Internal Error</response>
         </member>

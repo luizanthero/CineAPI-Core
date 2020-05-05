@@ -32,6 +32,18 @@ namespace CineAPI.Controllers
             => Ok(await business.GetAll());
 
         /// <summary>
+        /// Get all Films createds with pagination
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="limitPage"></param>
+        /// <returns>Return all Films</returns>
+        /// <response code="200">Success</response>
+        /// <response code="500">Internal Error</response>
+        [HttpGet("paginate/{page}/{limitPage}")]
+        public async Task<ActionResult<IEnumerable<Film>>> GetFilmsPaginate(int page, int limitPage)
+            => Ok(await business.GetAllPaginate(page, limitPage));
+
+        /// <summary>
         /// Get a Film by Id
         /// </summary>
         /// <param name="id"></param>
@@ -50,21 +62,56 @@ namespace CineAPI.Controllers
         }
 
         /// <summary>
-        /// Get a Film by Name
+        /// Get Films with same Name
         /// </summary>
         /// <param name="name"></param>
-        /// <returns>Return a Film</returns>
+        /// <returns>Return Films</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("name/{name}")]
-        public async Task<ActionResult<IEnumerable<ComboBoxViewModel>>> GetComboBoxName(string name)
+        public async Task<ActionResult<IEnumerable<Film>>> GetByName(string name)
         {
-            var film = await business.GetComboBox(name);
+            IEnumerable<Film> films = await business.GetByName(name);
+
+            if (films is null)
+                return NotFound();
+
+            return Ok(films);
+        }
+
+        /// <summary>
+        /// Get a Film by ApiCode
+        /// </summary>
+        /// <param name="apiCode"></param>
+        /// <returns>Return a Film</returns>
+        /// <response code="200">Success</response>
+        /// <response code="500">Internal Error</response>
+        [HttpGet("apiCode/{apiCode}")]
+        public async Task<ActionResult<Film>> GetByApiCode(string apiCode)
+        {
+            Film film = await business.GetByApiCode(apiCode);
 
             if (film is null)
                 return NotFound();
 
             return Ok(film);
+        }
+
+        /// <summary>
+        /// Get all Films in a ComboBox (Id, Value)
+        /// </summary>
+        /// <returns>Return a Films's ComboBox</returns>
+        /// <response code="200">Success</response>
+        /// <response code="500">Internal Error</response>
+        [HttpGet("comboBox")]
+        public async Task<ActionResult<IEnumerable<ComboBoxViewModel>>> GetComboBox()
+        {
+            var films = await business.GetComboBox();
+
+            if (films is null)
+                return NotFound();
+
+            return Ok(films);
         }
 
         /// <summary>
@@ -95,6 +142,50 @@ namespace CineAPI.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
+        }
+
+        /// <summary>
+        /// Update a Film by Id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///     
+        ///     {
+        ///         "Name": "Wonder Woman",
+        ///         "ApiCode": "tt0451279"
+        ///     }
+        ///     
+        /// </remarks>
+        /// <param name="id"></param>
+        /// <param name="film"></param>
+        /// <returns>Return a Film updated</returns>
+        /// <response code="200">Success</response>
+        /// <response code="500">Internal Error</response>
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutFilm(int id, Film film)
+        {
+            if (id != film.id)
+                return BadRequest();
+
+            if (await business.Update(film))
+                return Ok();
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+
+        /// <summary>
+        /// Delete a Film by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Return a Film deleted</returns>
+        /// <response code="200">Success</response>
+        /// <response code="500">Internal Error</response>
+        public async Task<IActionResult> DeleteFilm(int id)
+        {
+            if (await business.DeleteById(id))
+                return Ok();
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 }

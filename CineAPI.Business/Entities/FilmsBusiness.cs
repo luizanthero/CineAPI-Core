@@ -20,6 +20,8 @@ namespace CineAPI.Business.Entities
 
         public async Task<Film> Create(Film entity)
         {
+            entity.created_at = DateTime.Now;
+
             try
             {
                 context.Films.Add(entity);
@@ -79,6 +81,8 @@ namespace CineAPI.Business.Entities
 
         public async Task<bool> Update(Film entity)
         {
+            entity.updated_at = DateTime.Now;
+
             context.Entry(entity).State = EntityState.Modified;
 
             try

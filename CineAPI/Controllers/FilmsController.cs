@@ -26,7 +26,7 @@ namespace CineAPI.Controllers
         /// <returns>Return all Films</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Film>>> GetFilms()
-            => Ok(await business.GetFilms());
+            => Ok(await business.GetAll());
 
         /// <summary>
         /// Create a Film
@@ -49,7 +49,7 @@ namespace CineAPI.Controllers
         {
             try
             {
-                film = await business.PostFilm(film);
+                film = await business.Create(film);
                 return Ok(film);
             }
             catch (Exception)

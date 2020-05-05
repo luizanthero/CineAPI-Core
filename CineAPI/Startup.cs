@@ -1,3 +1,4 @@
+using CineAPI.Business.Entities;
 using CineAPI.Models;
 using CineAPI.Options;
 using Microsoft.AspNetCore.Builder;
@@ -5,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
@@ -29,8 +31,16 @@ namespace CineAPI
 
             services.AddCors();
 
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseMySQL(Configuration.GetConnectionString("ConnectionMysql")));
+            services.AddDbContext<AppDbContext>(options => 
+                options.UseMySql(Configuration.GetConnectionString("ConnectionMysql"), options =>
+                {
+                    options.ServerVersion(new Version(5, 7, 17), ServerType.MySql)
+                        .EnableRetryOnFailure(
+                            maxRetryCount: 10,
+                            maxRetryDelay: TimeSpan.FromSeconds(30),
+                            errorNumbersToAdd: null
+                        );
+                }));
 
             services.AddSwaggerGen(item =>
             {
@@ -53,6 +63,8 @@ namespace CineAPI
 
                 item.IncludeXmlComments(xmlPath);
             });
+
+            services.AddScoped<FilmsBusiness>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

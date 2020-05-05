@@ -4,6 +4,12 @@
         <name>CineAPI</name>
     </assembly>
     <members>
+        <member name="M:CineAPI.Controllers.FilmsController.GetFilms">
+            <summary>
+            Get all Films createds
+            </summary>
+            <returns>Return all Films</returns>
+        </member>
         <member name="M:CineAPI.Controllers.TesteController.Get">
             <summary>
             teste teste

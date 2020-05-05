@@ -100,5 +100,11 @@ namespace CineAPI.Business.Entities
                 throw;
             }
         }
+
+        public async Task<int> CountActived()
+            => await context.RoomTypes.CountAsync(item => item.IsActived);
+
+        public async Task<int> CountDesactived()
+            => await context.RoomTypes.CountAsync(item => !item.IsActived);
     }
 }

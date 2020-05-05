@@ -12,6 +12,10 @@ namespace CineAPI.Business.Interfaces
 
         Task<T> GetById(int id);
 
+        Task<int> CountActived();
+
+        Task<int> CountDesactived();
+
         Task<IEnumerable<ComboBoxViewModel>> GetComboBox();
 
         Task<T> Create(T entity);

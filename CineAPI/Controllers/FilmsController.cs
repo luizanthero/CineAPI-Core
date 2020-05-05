@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using CineAPI.Business.Entities;
 using CineAPI.Models;
@@ -42,6 +41,23 @@ namespace CineAPI.Controllers
         [HttpGet("paginate/{page}/{limitPage}")]
         public async Task<ActionResult<IEnumerable<Film>>> GetFilmsPaginate(int page, int limitPage)
             => Ok(await business.GetAllPaginate(page, limitPage));
+
+        /// <summary>
+        /// Return total of Registers createds
+        /// </summary>
+        /// <returns>Return total of Registers</returns>
+        /// <response code="200">Success</response>
+        /// <response code="500">Internal Error</response>
+        [HttpGet("count")]
+        public async Task<ActionResult<int>> CountRegisters()
+        {
+            var count = await business.CountActived();
+
+            if (count > 0)
+                return Ok(count);
+
+            return NotFound();
+        }
 
         /// <summary>
         /// Get a Film by Id

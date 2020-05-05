@@ -64,13 +64,15 @@ namespace CineAPI.Business.Entities
         public async Task<Film> GetById(int id)
             => await context.Films.FirstOrDefaultAsync(item => item.id == id);
 
-        public async Task<IEnumerable<ComboBoxViewModel>> GetComboBox(string value)
-            => await context.Films.Where(item => item.IsActived && item.Name.Contains(value))
-                .Select(item => new ComboBoxViewModel() { id = item.id, Value = item.Name }).ToListAsync();
+        public async Task<IEnumerable<Film>> GetByName(string name)
+            => await context.Films.Where(item => item.Name.Contains(name)).ToListAsync();
 
-        public async Task<IEnumerable<ComboBoxViewModel>> GetComboBoxByApiCode(string value)
-            => await context.Films.Where(item => item.IsActived && item.ApiCode.Contains(value))
-                .Select(item => new ComboBoxViewModel() { id = item.id, Value = item.ApiCode }).ToListAsync();
+        public async Task<Film> GetByApiCode(string apiCode)
+            => await context.Films.FirstOrDefaultAsync(item => item.ApiCode == apiCode);
+
+        public async Task<IEnumerable<ComboBoxViewModel>> GetComboBox()
+            => await context.Films.Where(item => item.IsActived)
+                .Select(item => new ComboBoxViewModel() { id = item.id, Value = item.Name }).ToListAsync();
 
         public async Task<bool> IsExist(int id)
             => await context.Films.AnyAsync(item => item.id == id);

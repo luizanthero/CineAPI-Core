@@ -219,6 +219,120 @@
             <response code="200">Success</response>
             <response code="500">Internal Error</response>
         </member>
+        <member name="M:CineAPI.Controllers.RoomsController.GetRooms">
+            <summary>
+            Get all Rooms created
+            </summary>
+            <returns>Return all Rooms</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.RoomsController.GetRoomsPaginate(System.Int32,System.Int32)">
+            <summary>
+            Get all Rooms created with pagination
+            </summary>
+            <param name="page"></param>
+            <param name="limitPage"></param>
+            <returns>Return all Rooms</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.RoomsController.CountRegisters">
+            <summary>
+            Get total of registers created
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CineAPI.Controllers.RoomsController.GetRoom(System.Int32)">
+            <summary>
+            Get a Room by Id
+            </summary>
+            <param name="id"></param>
+            <returns>Return a Room</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.RoomsController.GetByRoomType(System.Int32)">
+            <summary>
+            Get a Room by Room Type Id
+            </summary>
+            <param name="id"></param>
+            <returns>Return a Room</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.RoomsController.GetByScreen(System.Int32)">
+            <summary>
+            Get a Room by Screen Id
+            </summary>
+            <param name="id"></param>
+            <returns>Return a Screen</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.RoomsController.GetByName(System.String)">
+            <summary>
+            Get Rooms with same Name
+            </summary>
+            <param name="name"></param>
+            <returns>Return Rooms</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.RoomsController.GetComboBox">
+            <summary>
+            Get all Rooms in a ComboBox (Id, Value)
+            </summary>
+            <returns>Return a Rooms's ComboBox</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.RoomsController.PostRoom(CineAPI.Models.Room)">
+            <summary>
+            Create a Room
+            </summary>
+            <remarks>
+            Sample request:
+            
+                {
+                    "RoomTypeId": 1,
+                    "ScreenId": 1,
+                    "Name": "teste"
+                }
+            </remarks>
+            <param name="room"></param>
+            <returns>Return a Room created</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.RoomsController.PutRoom(System.Int32,CineAPI.Models.Room)">
+            <summary>
+            Update a Room by Id
+            </summary>
+            <remarks>
+            Sample request:
+            
+                {
+                    "RoomTypeId": 1,
+                    "ScreenId": 1,
+                    "Name": "teste"
+                }
+            </remarks>
+            <param name="id"></param>
+            <param name="room"></param>
+            <returns>Return a Room updated</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.RoomsController.DeleteRoom(System.Int32)">
+            <summary>
+            Delete a Room by Id
+            </summary>
+            <param name="id"></param>
+            <returns>Return a Room deleted</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
         <member name="M:CineAPI.Controllers.RoomTypesController.GetRoomTypes">
             <summary>
             Get all Room Types created

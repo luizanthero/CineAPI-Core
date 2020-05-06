@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CineAPI.Business.Entities;
 using CineAPI.Models;
+using CineAPI.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,47 +11,45 @@ namespace CineAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ExhibitionsController : ControllerBase
+    public class RoomsController : ControllerBase
     {
-        private readonly ExhibitionsBusiness business;
+        private readonly RoomsBusiness business;
 
-        public ExhibitionsController(ExhibitionsBusiness business)
+        public RoomsController(RoomsBusiness business)
         {
             this.business = business;
         }
 
         /// <summary>
-        /// Get all Exhibitions created
+        /// Get all Rooms created
         /// </summary>
-        /// <returns>Return all exhibitions</returns>
+        /// <returns>Return all Rooms</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Exhibition>>> GetExhibitions()
+        public async Task<ActionResult<IEnumerable<Room>>> GetRooms()
             => Ok(await business.GetAll());
 
         /// <summary>
-        /// Get all Exhibitons created with pagination
+        /// Get all Rooms created with pagination
         /// </summary>
         /// <param name="page"></param>
         /// <param name="limitPage"></param>
-        /// <returns>Return all exhibitions</returns>
+        /// <returns>Return all Rooms</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("paginate/{page}/{limitPage}")]
-        public async Task<ActionResult<IEnumerable<Exhibition>>> GetExhibitiosPaginate(int page, int limitPage)
+        public async Task<ActionResult<IEnumerable<Room>>> GetRoomsPaginate(int page, int limitPage)
             => Ok(await business.GetAllPaginate(page, limitPage));
 
         /// <summary>
-        /// Return total of registers created
+        /// Get total of registers created
         /// </summary>
-        /// <returns>Return total of registers</returns>
-        /// <response code="200">Success</response>
-        /// <response code="500">Internal Error</response>
+        /// <returns></returns>
         [HttpGet("count")]
         public async Task<ActionResult<int>> CountRegisters()
         {
-            int count = await business.CountActived();
+            var count = await business.CountActived();
 
             if (count > 0)
                 return Ok(count);
@@ -59,100 +58,111 @@ namespace CineAPI.Controllers
         }
 
         /// <summary>
-        /// Get a Exhibition by Id
+        /// Get a Room by Id
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>Return a Exhibition</returns>
+        /// <returns>Return a Room</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("{id}")]
-        public async Task<ActionResult<Exhibition>> GetExhibition(int id)
+        public async Task<ActionResult<Room>> GetRoom(int id)
         {
-            Exhibition exhibition = await business.GetById(id);
+            Room room = await business.GetById(id);
 
-            if (exhibition is null)
+            if (room is null)
                 return NotFound();
 
-            return Ok(exhibition);
+            return Ok(room);
         }
 
         /// <summary>
-        /// Get a Exhibition by Film Id
+        /// Get a Room by Room Type Id
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>Return a Exhibition</returns>
+        /// <returns>Return a Room</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
-        [HttpGet("film/{id}")]
-        public async Task<ActionResult<IEnumerable<Exhibition>>> GetByFilm(int id)
+        [HttpGet("roomType/{id}")]
+        public async Task<ActionResult<IEnumerable<Room>>> GetByRoomType(int id)
         {
-            IEnumerable<Exhibition> exhibitions = await business.GetByFilm(id);
+            IEnumerable<Room> rooms = await business.GetByRoomType(id);
 
-            if (exhibitions is null)
+            if (rooms is null)
                 return NotFound();
 
-            return Ok(exhibitions);
+            return Ok(rooms);
         }
 
         /// <summary>
-        /// Get a Exhibition by Room Id
+        /// Get a Room by Screen Id
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>Return a Exhibition</returns>
+        /// <returns>Return a Screen</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
-        [HttpGet("room/{id}")]
-        public async Task<ActionResult<IEnumerable<Exhibition>>> GetByRoom(int id)
+        [HttpGet("screen/{id}")]
+        public async Task<ActionResult<IEnumerable<Room>>> GetByScreen(int id)
         {
-            IEnumerable<Exhibition> exhibitions = await business.GetByRoom(id);
+            IEnumerable<Room> rooms = await business.GetByScreen(id);
 
-            if (exhibitions is null)
+            if (rooms is null)
                 return NotFound();
 
-            return Ok(exhibitions);
+            return Ok(rooms);
         }
 
         /// <summary>
-        /// Get a Exhibition by Schedule Id
+        /// Get Rooms with same Name
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns>Return a Exhibition</returns>
+        /// <param name="name"></param>
+        /// <returns>Return Rooms</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
-        [HttpGet("schedule/{id}")]
-        public async Task<ActionResult<IEnumerable<Exhibition>>> GetBySchedule(int id)
+        [HttpGet("name/{name}")]
+        public async Task<ActionResult<IEnumerable<Room>>> GetByName(string name)
         {
-            IEnumerable<Exhibition> exhibitions = await business.GetBySchedule(id);
+            IEnumerable<Room> rooms = await business.GetByName(name);
 
-            if (exhibitions is null)
+            if (rooms is null)
                 return NotFound();
 
-            return Ok(exhibitions);
+            return Ok(rooms);
         }
 
         /// <summary>
-        /// Create a Exhibition
+        /// Get all Rooms in a ComboBox (Id, Value)
+        /// </summary>
+        /// <returns>Return a Rooms's ComboBox</returns>
+        /// <response code="200">Success</response>
+        /// <response code="500">Internal Error</response>
+        [HttpGet("comboBox")]
+        public async Task<ActionResult<IEnumerable<ComboBoxViewModel>>> GetComboBox()
+            => Ok(await business.GetComboBox());
+
+        /// <summary>
+        /// Create a Room
         /// </summary>
         /// <remarks>
         /// Sample request:
         /// 
         ///     {
-        ///         "FilmId": 1,
-        ///         "RoomId": 1,
-        ///         "Schedule": 1
+        ///         "RoomTypeId": 1,
+        ///         "ScreenId": 1,
+        ///         "Name": "teste"
         ///     }
         /// </remarks>
-        /// <param name="exhibition"></param>
-        /// <returns>Return a Exhibition created</returns>
+        /// <param name="room"></param>
+        /// <returns>Return a Room created</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpPost]
-        public async Task<ActionResult<Exhibition>> PostExhibition(Exhibition exhibition)
+        public async Task<ActionResult<Room>> PostRoom(Room room)
         {
             try
             {
-                exhibition = await business.Create(exhibition);
-                return Ok(exhibition);
+                room = await business.Create(room);
+
+                return Ok(room);
             }
             catch (Exception)
             {
@@ -161,43 +171,43 @@ namespace CineAPI.Controllers
         }
 
         /// <summary>
-        /// Update a Exhibition by Id
+        /// Update a Room by Id
         /// </summary>
         /// <remarks>
         /// Sample request:
         /// 
         ///     {
-        ///         "FilmId": 1,
-        ///         "RoomId": 1,
-        ///         "ScheduleId": 1
+        ///         "RoomTypeId": 1,
+        ///         "ScreenId": 1,
+        ///         "Name": "teste"
         ///     }
         /// </remarks>
         /// <param name="id"></param>
-        /// <param name="exhibition"></param>
-        /// <returns>Return a Exhibition updated</returns>
+        /// <param name="room"></param>
+        /// <returns>Return a Room updated</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutExhibition(int id, Exhibition exhibition)
+        public async Task<IActionResult> PutRoom(int id, Room room)
         {
-            if (id != exhibition.id)
+            if (id != room.id)
                 return BadRequest();
 
-            if (await business.Update(exhibition))
+            if (await business.Update(room))
                 return Ok();
 
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         /// <summary>
-        /// Delete a Exhibition by Id
+        /// Delete a Room by Id
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>Return a Exhibition deleted</returns>
+        /// <returns>Return a Room deleted</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteExhibition(int id)
+        public async Task<IActionResult> DeleteRoom(int id)
         {
             if (await business.DeleteById(id))
                 return Ok();

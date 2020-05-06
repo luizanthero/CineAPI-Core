@@ -66,7 +66,10 @@ namespace CineAPI
 
             services.AddScoped<ExhibitionsBusiness>();
             services.AddScoped<FilmsBusiness>();
+            services.AddScoped<RoomsBusiness>();
             services.AddScoped<RoomTypesBusiness>();
+            services.AddScoped<SchedulesBusiness>();
+            services.AddScoped<ScreensBusiness>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

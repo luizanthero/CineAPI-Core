@@ -2,11 +2,9 @@
 using CineAPI.Models;
 using CineAPI.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CineAPI.Business.Entities
@@ -136,6 +134,15 @@ namespace CineAPI.Business.Entities
 
         public async Task<Exhibition> GetById(int id)
             => await context.Exhibitions.FirstOrDefaultAsync(item => item.id == id);
+
+        public async Task<IEnumerable<Exhibition>> GetByFilm(int id)
+            => await context.Exhibitions.Where(item => item.FilmId == id).ToListAsync();
+
+        public async Task<IEnumerable<Exhibition>> GetByRoom(int id)
+            => await context.Exhibitions.Where(item => item.RoomId == id).ToListAsync();
+
+        public async Task<IEnumerable<Exhibition>> GetBySchedule(int id)
+            => await context.Exhibitions.Where(item => item.ScheduleId == id).ToListAsync();
 
         public Task<IEnumerable<ComboBoxViewModel>> GetComboBox()
             => throw new NotImplementedException();

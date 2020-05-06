@@ -64,6 +64,7 @@ namespace CineAPI
                 item.IncludeXmlComments(xmlPath);
             });
 
+            services.AddScoped<ExhibitionsBusiness>();
             services.AddScoped<FilmsBusiness>();
             services.AddScoped<RoomTypesBusiness>();
         }

@@ -1,5 +1,4 @@
-﻿using CineAPI.Domain.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace CineAPI.Models
 {

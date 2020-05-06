@@ -4,9 +4,117 @@
         <name>CineAPI</name>
     </assembly>
     <members>
+        <member name="M:CineAPI.Controllers.ExhibitionsController.GetExhibitions">
+            <summary>
+            Get all Exhibitions created
+            </summary>
+            <returns>Return all exhibitions</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.ExhibitionsController.GetExhibitiosPaginate(System.Int32,System.Int32)">
+            <summary>
+            Get all Exhibitons created with pagination
+            </summary>
+            <param name="page"></param>
+            <param name="limitPage"></param>
+            <returns>Return all exhibitions</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.ExhibitionsController.CountRegisters">
+            <summary>
+            Return total of registers created
+            </summary>
+            <returns>Return total of registers</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.ExhibitionsController.GetExhibition(System.Int32)">
+            <summary>
+            Get a Exhibition by Id
+            </summary>
+            <param name="id"></param>
+            <returns>Return a Exhibition</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.ExhibitionsController.GetByFilm(System.Int32)">
+            <summary>
+            Get a Exhibition by Film Id
+            </summary>
+            <param name="id"></param>
+            <returns>Return a Exhibition</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.ExhibitionsController.GetByRoom(System.Int32)">
+            <summary>
+            Get a Exhibition by Room Id
+            </summary>
+            <param name="id"></param>
+            <returns>Return a Exhibition</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.ExhibitionsController.GetBySchedule(System.Int32)">
+            <summary>
+            Get a Exhibition by Schedule Id
+            </summary>
+            <param name="id"></param>
+            <returns>Return a Exhibition</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.ExhibitionsController.PostExhibition(CineAPI.Models.Exhibition)">
+            <summary>
+            Create a Exhibition
+            </summary>
+            <remarks>
+            Sample request:
+            
+                {
+                    "FilmId": 1,
+                    "RoomId": 1,
+                    "Schedule": 1
+                }
+            </remarks>
+            <param name="exhibition"></param>
+            <returns>Return a Exhibition created</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.ExhibitionsController.PutExhibition(System.Int32,CineAPI.Models.Exhibition)">
+            <summary>
+            Update a Exhibition by Id
+            </summary>
+            <remarks>
+            Sample request:
+            
+                {
+                    "FilmId": 1,
+                    "RoomId": 1,
+                    "ScheduleId": 1
+                }
+            </remarks>
+            <param name="id"></param>
+            <param name="exhibition"></param>
+            <returns>Return a Exhibition updated</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.ExhibitionsController.DeleteExhibition(System.Int32)">
+            <summary>
+            Delete a Exhibition by Id
+            </summary>
+            <param name="id"></param>
+            <returns>Return a Exhibition deleted</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
         <member name="M:CineAPI.Controllers.FilmsController.GetFilms">
             <summary>
-            Get all Films createds
+            Get all Films created
             </summary>
             <returns>Return all Films</returns>
             <response code="200">Success</response>
@@ -14,7 +122,7 @@
         </member>
         <member name="M:CineAPI.Controllers.FilmsController.GetFilmsPaginate(System.Int32,System.Int32)">
             <summary>
-            Get all Films createds with pagination
+            Get all Films created with pagination
             </summary>
             <param name="page"></param>
             <param name="limitPage"></param>
@@ -24,7 +132,7 @@
         </member>
         <member name="M:CineAPI.Controllers.FilmsController.CountRegisters">
             <summary>
-            Return total of Registers createds
+            Return total of Registers created
             </summary>
             <returns>Return total of Registers</returns>
             <response code="200">Success</response>
@@ -113,7 +221,7 @@
         </member>
         <member name="M:CineAPI.Controllers.RoomTypesController.GetRoomTypes">
             <summary>
-            Get all Room Types
+            Get all Room Types created
             </summary>
             <returns>Return all Room Types</returns>
             <response code="200">Success</response>
@@ -121,7 +229,7 @@
         </member>
         <member name="M:CineAPI.Controllers.RoomTypesController.GetRoomTypesPaginate(System.Int32,System.Int32)">
             <summary>
-            Get all Room Type with pagination
+            Get all Room Type created with pagination
             </summary>
             <param name="page"></param>
             <param name="limitPage"></param>
@@ -131,7 +239,7 @@
         </member>
         <member name="M:CineAPI.Controllers.RoomTypesController.CountRegisters">
             <summary>
-            Return total of Registers createds
+            Return total of Registers created
             </summary>
             <returns>Return total of Registers</returns>
             <response code="200">Success</response>

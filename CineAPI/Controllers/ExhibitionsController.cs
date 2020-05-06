@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CineAPI.Business.Entities;
 using CineAPI.Models;
-using CineAPI.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,47 +11,47 @@ namespace CineAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FilmsController : ControllerBase
+    public class ExhibitionsController : ControllerBase
     {
-        private readonly FilmsBusiness business;
+        private readonly ExhibitionsBusiness business;
 
-        public FilmsController(FilmsBusiness business)
+        public ExhibitionsController(ExhibitionsBusiness business)
         {
             this.business = business;
         }
 
         /// <summary>
-        /// Get all Films created
+        /// Get all Exhibitions created
         /// </summary>
-        /// <returns>Return all Films</returns>
+        /// <returns>Return all exhibitions</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Film>>> GetFilms()
+        public async Task<ActionResult<IEnumerable<Exhibition>>> GetExhibitions()
             => Ok(await business.GetAll());
 
         /// <summary>
-        /// Get all Films created with pagination
+        /// Get all Exhibitons created with pagination
         /// </summary>
         /// <param name="page"></param>
         /// <param name="limitPage"></param>
-        /// <returns>Return all Films</returns>
+        /// <returns>Return all exhibitions</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("paginate/{page}/{limitPage}")]
-        public async Task<ActionResult<IEnumerable<Film>>> GetFilmsPaginate(int page, int limitPage)
+        public async Task<ActionResult<IEnumerable<Exhibition>>> GetExhibitiosPaginate(int page, int limitPage)
             => Ok(await business.GetAllPaginate(page, limitPage));
 
         /// <summary>
-        /// Return total of Registers created
+        /// Return total of registers created
         /// </summary>
-        /// <returns>Return total of Registers</returns>
+        /// <returns>Return total of registers</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("count")]
         public async Task<ActionResult<int>> CountRegisters()
         {
-            var count = await business.CountActived();
+            int count = await business.CountActived();
 
             if (count > 0)
                 return Ok(count);
@@ -60,99 +60,100 @@ namespace CineAPI.Controllers
         }
 
         /// <summary>
-        /// Get a Film by Id
+        /// Get a Exhibition by Id
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>Return a Film</returns>
+        /// <returns>Return a Exhibition</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("{id}")]
-        public async Task<ActionResult<Film>> GetFilm(int id)
+        public async Task<ActionResult<Exhibition>> GetExhibition(int id)
         {
-            Film film = await business.GetById(id);
+            Exhibition exhibition = await business.GetById(id);
 
-            if (film is null)
+            if (exhibition is null)
                 return NotFound();
 
-            return Ok(film);
+            return Ok(exhibition);
         }
 
         /// <summary>
-        /// Get Films with same Name
+        /// Get a Exhibition by Film Id
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns>Return Films</returns>
+        /// <param name="id"></param>
+        /// <returns>Return a Exhibition</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
-        [HttpGet("name/{name}")]
-        public async Task<ActionResult<IEnumerable<Film>>> GetByName(string name)
+        [HttpGet("film/{id}")]
+        public async Task<ActionResult<IEnumerable<Exhibition>>> GetByFilm(int id)
         {
-            IEnumerable<Film> films = await business.GetByName(name);
+            IEnumerable<Exhibition> exhibitions = await business.GetByFilm(id);
 
-            if (films is null)
+            if (exhibitions is null)
                 return NotFound();
 
-            return Ok(films);
+            return Ok(exhibitions);
         }
 
         /// <summary>
-        /// Get a Film by ApiCode
+        /// Get a Exhibition by Room Id
         /// </summary>
-        /// <param name="apiCode"></param>
-        /// <returns>Return a Film</returns>
+        /// <param name="id"></param>
+        /// <returns>Return a Exhibition</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
-        [HttpGet("apiCode/{apiCode}")]
-        public async Task<ActionResult<Film>> GetByApiCode(string apiCode)
+        [HttpGet("room/{id}")]
+        public async Task<ActionResult<IEnumerable<Exhibition>>> GetByRoom(int id)
         {
-            Film film = await business.GetByApiCode(apiCode);
+            IEnumerable<Exhibition> exhibitions = await business.GetByRoom(id);
 
-            if (film is null)
+            if (exhibitions is null)
                 return NotFound();
 
-            return Ok(film);
+            return Ok(exhibitions);
         }
 
         /// <summary>
-        /// Get all Films in a ComboBox (Id, Value)
+        /// Get a Exhibition by Schedule Id
         /// </summary>
-        /// <returns>Return a Films's ComboBox</returns>
+        /// <param name="id"></param>
+        /// <returns>Return a Exhibition</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
-        [HttpGet("comboBox")]
-        public async Task<ActionResult<IEnumerable<ComboBoxViewModel>>> GetComboBox()
+        [HttpGet("schedule/{id}")]
+        public async Task<ActionResult<IEnumerable<Exhibition>>> GetBySchedule(int id)
         {
-            var films = await business.GetComboBox();
+            IEnumerable<Exhibition> exhibitions = await business.GetBySchedule(id);
 
-            if (films is null)
+            if (exhibitions is null)
                 return NotFound();
 
-            return Ok(films);
+            return Ok(exhibitions);
         }
 
         /// <summary>
-        /// Create a Film
+        /// Create a Exhibition
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     
+        /// 
         ///     {
-        ///         "Name": "Wonder Woman",
-        ///         "ApiCode": "tt0451279"
+        ///         "FilmId": 1,
+        ///         "RoomId": 1,
+        ///         "Schedule": 1
         ///     }
-        ///     
         /// </remarks>
-        /// <param name="film"></param>
-        /// <returns>Return a Film created</returns>
+        /// <param name="exhibition"></param>
+        /// <returns>Return a Exhibition created</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpPost]
-        public async Task<ActionResult<Film>> PostFilm(Film film)
+        public async Task<ActionResult<Exhibition>> PostExhibition(Exhibition exhibition)
         {
             try
             {
-                film = await business.Create(film);
-                return Ok(film);
+                exhibition = await business.Create(exhibition);
+                return Ok(exhibition);
             }
             catch (Exception)
             {
@@ -161,43 +162,43 @@ namespace CineAPI.Controllers
         }
 
         /// <summary>
-        /// Update a Film by Id
+        /// Update a Exhibition by Id
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     
+        /// 
         ///     {
-        ///         "Name": "Wonder Woman",
-        ///         "ApiCode": "tt0451279"
+        ///         "FilmId": 1,
+        ///         "RoomId": 1,
+        ///         "ScheduleId": 1
         ///     }
-        ///     
         /// </remarks>
         /// <param name="id"></param>
-        /// <param name="film"></param>
-        /// <returns>Return a Film updated</returns>
+        /// <param name="exhibition"></param>
+        /// <returns>Return a Exhibition updated</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutFilm(int id, Film film)
+        public async Task<IActionResult> PutExhibition(int id, Exhibition exhibition)
         {
-            if (id != film.id)
+            if (id != exhibition.id)
                 return BadRequest();
 
-            if (await business.Update(film))
+            if (await business.Update(exhibition))
                 return Ok();
 
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         /// <summary>
-        /// Delete a Film by Id
+        /// Delete a Exhibition by Id
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>Return a Film deleted</returns>
+        /// <returns>Return a Exhibition deleted</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFilm(int id)
+        public async Task<IActionResult> DeleteExhibition(int id)
         {
             if (await business.DeleteById(id))
                 return Ok();

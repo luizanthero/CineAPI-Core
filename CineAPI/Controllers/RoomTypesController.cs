@@ -21,7 +21,7 @@ namespace CineAPI.Controllers
         }
 
         /// <summary>
-        /// Get all Room Types
+        /// Get all Room Types created
         /// </summary>
         /// <returns>Return all Room Types</returns>
         /// <response code="200">Success</response>
@@ -31,7 +31,7 @@ namespace CineAPI.Controllers
             => Ok(await business.GetAll());
 
         /// <summary>
-        /// Get all Room Type with pagination
+        /// Get all Room Type created with pagination
         /// </summary>
         /// <param name="page"></param>
         /// <param name="limitPage"></param>
@@ -43,7 +43,7 @@ namespace CineAPI.Controllers
             => Ok(await business.GetAllPaginate(page, limitPage));
 
         /// <summary>
-        /// Return total of Registers createds
+        /// Return total of Registers created
         /// </summary>
         /// <returns>Return total of Registers</returns>
         /// <response code="200">Success</response>

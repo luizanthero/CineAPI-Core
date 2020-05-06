@@ -22,6 +22,14 @@
             <response code="200">Success</response>
             <response code="500">Internal Error</response>
         </member>
+        <member name="M:CineAPI.Controllers.FilmsController.CountRegisters">
+            <summary>
+            Return total of Registers createds
+            </summary>
+            <returns>Return total of Registers</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
         <member name="M:CineAPI.Controllers.FilmsController.GetFilm(System.Int32)">
             <summary>
             Get a Film by Id
@@ -118,6 +126,14 @@
             <param name="page"></param>
             <param name="limitPage"></param>
             <returns>Return all Room Types</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.RoomTypesController.CountRegisters">
+            <summary>
+            Return total of Registers createds
+            </summary>
+            <returns>Return total of Registers</returns>
             <response code="200">Success</response>
             <response code="500">Internal Error</response>
         </member>

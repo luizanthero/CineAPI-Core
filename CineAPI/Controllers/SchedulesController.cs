@@ -100,6 +100,7 @@ namespace CineAPI.Controllers
         /// <returns>Return a Schedules's ComboBox</returns>
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
+        [HttpGet("comboBox")]
         public async Task<ActionResult<IEnumerable<ComboBoxViewModel>>> GetComboBox()
             => Ok(await business.GetComboBox());
 

@@ -127,22 +127,44 @@ namespace CineAPI.Business.Entities
         }
 
         public async Task<IEnumerable<Exhibition>> GetAll()
-            => await context.Exhibitions.ToListAsync();
+        {
+            try
+            {
+                List<Exhibition> result = await context.Exhibitions
+                    .Include(item => item.Film).Include(item => item.Room).Include(item => item.Schedule).ToListAsync();
+
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
         public async Task<IEnumerable<Exhibition>> GetAllPaginate(int page, int limitPage)
-            => await context.Exhibitions.Skip((page - 1) * limitPage).Take(limitPage).ToListAsync();
+            => await context.Exhibitions
+                .Include(item => item.Film).Include(item => item.Room).Include(item => item.Schedule)
+                .Skip((page - 1) * limitPage).Take(limitPage).ToListAsync();
 
         public async Task<Exhibition> GetById(int id)
-            => await context.Exhibitions.FirstOrDefaultAsync(item => item.id == id);
+            => await context.Exhibitions
+                .Include(item => item.Film).Include(item => item.Room).Include(item => item.Schedule)
+                .FirstOrDefaultAsync(item => item.id == id);
 
         public async Task<IEnumerable<Exhibition>> GetByFilm(int id)
-            => await context.Exhibitions.Where(item => item.FilmId == id).ToListAsync();
+            => await context.Exhibitions
+                .Include(item => item.Film).Include(item => item.Room).Include(item => item.Schedule)
+                .Where(item => item.FilmId == id).ToListAsync();
 
         public async Task<IEnumerable<Exhibition>> GetByRoom(int id)
-            => await context.Exhibitions.Where(item => item.RoomId == id).ToListAsync();
+            => await context.Exhibitions
+                .Include(item => item.Film).Include(item => item.Room).Include(item => item.Schedule)
+                .Where(item => item.RoomId == id).ToListAsync();
 
         public async Task<IEnumerable<Exhibition>> GetBySchedule(int id)
-            => await context.Exhibitions.Where(item => item.ScheduleId == id).ToListAsync();
+            => await context.Exhibitions
+                .Include(item => item.Film).Include(item => item.Room).Include(item => item.Schedule)
+                .Where(item => item.ScheduleId == id).ToListAsync();
 
         public Task<IEnumerable<ComboBoxViewModel>> GetComboBox()
             => throw new NotImplementedException();

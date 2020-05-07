@@ -155,6 +155,15 @@
             <response code="200">Success</response>
             <response code="500">Internal Error</response>
         </member>
+        <member name="M:CineAPI.Controllers.FilmsController.GetFilmDetails(System.Int32)">
+            <summary>
+            Get a Film details by Id
+            </summary>
+            <param name="id"></param>
+            <returns>Return a Film</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
         <member name="M:CineAPI.Controllers.FilmsController.CountRegisters">
             <summary>
             Return total of Registers created

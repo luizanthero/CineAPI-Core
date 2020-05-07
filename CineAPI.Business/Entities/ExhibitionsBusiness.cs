@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CineAPI.Business.Entities
 {
-    public class ExhibitionsBusiness : IRepository<Exhibition>
+    public class ExhibitionsBusiness : IRepository<Exhibition>, IViewModel<ExhibitionDetailsViewModel>
     {
         private readonly AppDbContext context;
 
@@ -174,5 +174,32 @@ namespace CineAPI.Business.Entities
                 throw;
             }
         }
+
+        public async Task<IEnumerable<ExhibitionDetailsViewModel>> GetAllDetails()
+            => await context.Exhibitions
+                .Include(item => item.Film).Include(item => item.Room).Include(item => item.Schedule)
+                .Where(item => item.Film.IsActived && item.Room.IsActived && item.Schedule.IsActived)
+                .Select(item => new ExhibitionDetailsViewModel()
+                {
+                    id = item.id,
+                    Filme = item.Film.Name,
+                    Room = item.Room.Name,
+                    Schedule = item.Schedule.Description,
+                    created_at = item.created_at,
+                    updated_at = item.updated_at
+                }).ToListAsync();
+
+        public async Task<ExhibitionDetailsViewModel> GetDetails(int id)
+            => await context.Exhibitions
+                .Include(item => item.Film).Include(item => item.Room).Include(item => item.Schedule)
+                .Select(item => new ExhibitionDetailsViewModel()
+                {
+                    id = item.id,
+                    Filme = item.Film.Name,
+                    Room = item.Room.Name,
+                    Schedule = item.Schedule.Description,
+                    created_at = item.created_at,
+                    updated_at = item.updated_at
+                }).FirstOrDefaultAsync(item => item.id == id);
     }
 }

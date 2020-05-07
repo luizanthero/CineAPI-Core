@@ -2,6 +2,7 @@
 using CineAPI.Models;
 using CineAPI.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CineAPI.Business.Entities
 {
-    public class RoomsBusiness : IRepository<Room>
+    public class RoomsBusiness : IRepository<Room>, IViewModel<RoomDetailsViewModel>
     {
         private readonly AppDbContext context;
 
@@ -64,29 +65,43 @@ namespace CineAPI.Business.Entities
         }
 
         public async Task<IEnumerable<Room>> GetAll()
-            => await context.Rooms.Where(item => item.IsActived).ToListAsync();
+            => await context.Rooms
+                .Include(item => item.RoomType).Include(item => item.Screen)
+                .Where(item => item.IsActived).ToListAsync();
 
         public async Task<IEnumerable<Room>> GetAllPaginate(int page, int limitPage)
-            => await context.Rooms.Where(item => item.IsActived).Skip((page - 1) * limitPage).Take(limitPage).ToListAsync();
+            => await context.Rooms
+                .Include(item => item.RoomType).Include(item => item.Screen)
+                .Where(item => item.IsActived).Skip((page - 1) * limitPage).Take(limitPage).ToListAsync();
 
         public async Task<Room> GetById(int id)
-            => await context.Rooms.FirstOrDefaultAsync(item => item.id == id);
+            => await context.Rooms
+                .Include(item => item.RoomType).Include(item => item.Screen)
+                .FirstOrDefaultAsync(item => item.id == id);
 
         public async Task<IEnumerable<Room>> GetByScreen(int id)
-            => await context.Rooms.Where(item => item.IsActived && item.ScreenId == id).ToListAsync();
+            => await context.Rooms
+                .Include(item => item.RoomType).Include(item => item.Screen)
+                .Where(item => item.IsActived && item.ScreenId == id).ToListAsync();
 
         public async Task<IEnumerable<Room>> GetByRoomType(int id)
-            => await context.Rooms.Where(item => item.IsActived && item.RoomTypeId == id).ToListAsync();
+            => await context.Rooms
+                .Include(item => item.RoomType).Include(item => item.Screen)
+                .Where(item => item.IsActived && item.RoomTypeId == id).ToListAsync();
 
         public async Task<IEnumerable<Room>> GetByName(string name)
-            => await context.Rooms.Where(item => item.IsActived && item.Name.Contains(name)).ToListAsync();
+            => await context.Rooms
+                .Include(item => item.RoomType).Include(item => item.Screen)
+                .Where(item => item.IsActived && item.Name.Contains(name)).ToListAsync();
 
         public async Task<IEnumerable<ComboBoxViewModel>> GetComboBox()
-            => await context.Rooms.Where(item => item.IsActived)
+            => await context.Rooms
+                .Include(item => item.RoomType).Include(item => item.Screen)
+                .Where(item => item.IsActived)
                 .Select(item => new ComboBoxViewModel() { id = item.id, Value = item.Name }).ToListAsync();
 
         public async Task<bool> IsExist(int id)
-            => await context.Rooms.AnyAsync(item => item.id == id);  
+            => await context.Rooms.AnyAsync(item => item.id == id);
 
         public async Task<bool> Update(Room entity)
         {
@@ -111,6 +126,72 @@ namespace CineAPI.Business.Entities
             {
                 throw;
             }
+        }
+
+        public async Task<IEnumerable<RoomDetailsViewModel>> GetAllDetails()
+        {
+            List<RoomDetailsViewModel> result = await (from room in context.Rooms
+                                                        .Include(item => item.Screen).Include(item => item.RoomType)
+                                                       let exhibitions = (ICollection<ExhibitionDetailsViewModel>)context.Exhibitions
+                                                           .Include(item => item.Film).Include(item => item.Room)
+                                                           .Include(item => item.Schedule)
+                                                           .Where(item => item.RoomId == room.id)
+                                                           .Select(item => new ExhibitionDetailsViewModel()
+                                                           {
+                                                               id = item.id,
+                                                               Filme = item.Film.Name,
+                                                               ApiCode = item.Film.ApiCode,
+                                                               Room = item.Room.Name,
+                                                               Schedule = item.Schedule.Description,
+                                                               created_at = item.created_at,
+                                                               updated_at = item.updated_at
+                                                           })
+                                                       where room.IsActived
+                                                       select new RoomDetailsViewModel()
+                                                       {
+                                                           id = room.id,
+                                                           Name = room.Name,
+                                                           RoomType = room.RoomType.Description,
+                                                           Screen = room.Screen.Size,
+                                                           Exhibitions = exhibitions,
+                                                           created_at = room.created_at,
+                                                           updated_at = room.updated_at
+                                                       }).ToListAsync();
+
+            return result;
+        }
+
+        public async Task<RoomDetailsViewModel> GetDetails(int id)
+        {
+            RoomDetailsViewModel result = await (from room in context.Rooms
+                                                    .Include(item => item.Screen).Include(item => item.RoomType)
+                                                 let exhibitions = (ICollection<ExhibitionDetailsViewModel>)context.Exhibitions
+                                                     .Include(item => item.Film).Include(item => item.Room)
+                                                     .Include(item => item.Schedule)
+                                                     .Where(item => item.RoomId == room.id)
+                                                     .Select(item => new ExhibitionDetailsViewModel()
+                                                     {
+                                                         id = item.id,
+                                                         Filme = item.Film.Name,
+                                                         ApiCode = item.Film.ApiCode,
+                                                         Room = item.Room.Name,
+                                                         Schedule = item.Schedule.Description,
+                                                         created_at = item.created_at,
+                                                         updated_at = item.updated_at
+                                                     })
+                                                 where room.IsActived && room.id == id
+                                                 select new RoomDetailsViewModel()
+                                                 {
+                                                     id = room.id,
+                                                     Name = room.Name,
+                                                     RoomType = room.RoomType.Description,
+                                                     Screen = room.Screen.Size,
+                                                     Exhibitions = exhibitions,
+                                                     created_at = room.created_at,
+                                                     updated_at = room.updated_at
+                                                 }).FirstOrDefaultAsync();
+
+            return result;
         }
     }
 }

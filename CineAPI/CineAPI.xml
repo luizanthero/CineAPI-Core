@@ -271,6 +271,23 @@
             <response code="200">Success</response>
             <response code="500">Internal Error</response>
         </member>
+        <member name="M:CineAPI.Controllers.RoomsController.GetRoomsDetails">
+            <summary>
+            Get all Rooms details created 
+            </summary>
+            <returns>Return all Rooms</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.RoomsController.GetRoomDetails(System.Int32)">
+            <summary>
+            Get a Room details by Id
+            </summary>
+            <param name="id"></param>
+            <returns>Return a Room</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
         <member name="M:CineAPI.Controllers.RoomsController.CountRegisters">
             <summary>
             Get total of registers created

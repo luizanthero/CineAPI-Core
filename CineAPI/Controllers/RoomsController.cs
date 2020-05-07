@@ -6,6 +6,7 @@ using CineAPI.Models;
 using CineAPI.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Razor.Language.Extensions;
 
 namespace CineAPI.Controllers
 {
@@ -41,6 +42,27 @@ namespace CineAPI.Controllers
         [HttpGet("paginate/{page}/{limitPage}")]
         public async Task<ActionResult<IEnumerable<Room>>> GetRoomsPaginate(int page, int limitPage)
             => Ok(await business.GetAllPaginate(page, limitPage));
+
+        /// <summary>
+        /// Get all Rooms details created 
+        /// </summary>
+        /// <returns>Return all Rooms</returns>
+        /// <response code="200">Success</response>
+        /// <response code="500">Internal Error</response>
+        [HttpGet("details")]
+        public async Task<ActionResult<IEnumerable<RoomDetailsViewModel>>> GetRoomsDetails()
+            => Ok(await business.GetAllDetails());
+
+        /// <summary>
+        /// Get a Room details by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Return a Room</returns>
+        /// <response code="200">Success</response>
+        /// <response code="500">Internal Error</response>
+        [HttpGet("details/{id}")]
+        public async Task<ActionResult<IEnumerable<RoomDetailsViewModel>>> GetRoomDetails(int id)
+            => Ok(await business.GetDetails(id));
 
         /// <summary>
         /// Get total of registers created

@@ -28,5 +28,8 @@ namespace CineAPI.Models
         public DateTime created_at { get; set; }
 
         public DateTime updated_at { get; set; }
+
+        public virtual RoomType RoomType { get; set; }
+        public virtual Screen Screen { get; set; }
     }
 }

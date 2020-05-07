@@ -127,19 +127,8 @@ namespace CineAPI.Business.Entities
         }
 
         public async Task<IEnumerable<Exhibition>> GetAll()
-        {
-            try
-            {
-                List<Exhibition> result = await context.Exhibitions
-                    .Include(item => item.Film).Include(item => item.Room).Include(item => item.Schedule).ToListAsync();
-
-                return result;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+            => await context.Exhibitions
+                .Include(item => item.Film).Include(item => item.Room).Include(item => item.Schedule).ToListAsync();
 
         public async Task<IEnumerable<Exhibition>> GetAllPaginate(int page, int limitPage)
             => await context.Exhibitions

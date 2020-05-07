@@ -183,6 +183,7 @@ namespace CineAPI.Business.Entities
                 {
                     id = item.id,
                     Filme = item.Film.Name,
+                    ApiCode = item.Film.ApiCode,
                     Room = item.Room.Name,
                     Schedule = item.Schedule.Description,
                     created_at = item.created_at,
@@ -196,6 +197,7 @@ namespace CineAPI.Business.Entities
                 {
                     id = item.id,
                     Filme = item.Film.Name,
+                    ApiCode = item.Film.ApiCode,
                     Room = item.Room.Name,
                     Schedule = item.Schedule.Description,
                     created_at = item.created_at,

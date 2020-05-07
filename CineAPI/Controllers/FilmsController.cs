@@ -43,6 +43,16 @@ namespace CineAPI.Controllers
             => Ok(await business.GetAllPaginate(page, limitPage));
 
         /// <summary>
+        /// Get all Films details created 
+        /// </summary>
+        /// <returns>Return all Films</returns>
+        /// <response code="200">Success</response>
+        /// <response code="500">Internal Error</response>
+        [HttpGet("details")]
+        public async Task<ActionResult<IEnumerable<FilmDetailsViewModel>>> GetFilmsDetails()
+            => Ok(await business.GetAllDetails());
+
+        /// <summary>
         /// Return total of Registers created
         /// </summary>
         /// <returns>Return total of Registers</returns>

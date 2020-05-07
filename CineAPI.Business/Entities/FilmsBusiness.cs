@@ -4,12 +4,13 @@ using CineAPI.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace CineAPI.Business.Entities
 {
-    public class FilmsBusiness : IRepository<Film>
+    public class FilmsBusiness : IRepository<Film>, IViewModel<FilmDetailsViewModel>
     {
         private readonly AppDbContext context;
 
@@ -109,5 +110,22 @@ namespace CineAPI.Business.Entities
 
         public async Task<int> CountDesactived()
             => await context.Films.CountAsync(item => !item.IsActived);
+
+        public async Task<IEnumerable<FilmDetailsViewModel>> GetAllDetails()
+            => await context.Films.Include(item => item.Exhibitions)
+                .Where(item => item.IsActived).Select(item => new FilmDetailsViewModel()
+                {
+                    id = item.id,
+                    Name = item.Name,
+                    ApiCode = item.ApiCode,
+                    Exhibitions = ExhibitionDetailsViewModel.ConvertTo(item.Exhibitions),
+                    created_at = item.created_at,
+                    updated_at = item.updated_at
+                }).ToListAsync();
+
+        public Task<FilmDetailsViewModel> GetDetails(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

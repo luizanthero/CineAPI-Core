@@ -3,12 +3,8 @@ using CineAPI.Models;
 using CineAPI.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace CineAPI.Business.Entities
@@ -123,6 +119,8 @@ namespace CineAPI.Business.Entities
                                                            .Select(item => new ExhibitionDetailsViewModel()
                                                            {
                                                                id = item.id,
+                                                               Filme = item.Film.Name,
+                                                               ApiCode = item.Film.ApiCode,
                                                                Room = item.Room.Name,
                                                                Schedule = item.Schedule.Description,
                                                                created_at = item.created_at,
@@ -149,6 +147,8 @@ namespace CineAPI.Business.Entities
                                                      .Select(item => new ExhibitionDetailsViewModel()
                                                      {
                                                          id = item.id,
+                                                         Filme = item.Film.Name,
+                                                         ApiCode = item.Film.ApiCode,
                                                          Room = item.Room.Name,
                                                          Schedule = item.Schedule.Description,
                                                          created_at = item.created_at,

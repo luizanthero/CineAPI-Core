@@ -147,6 +147,14 @@
             <response code="200">Success</response>
             <response code="500">Internal Error</response>
         </member>
+        <member name="M:CineAPI.Controllers.FilmsController.GetFilmsDetails">
+            <summary>
+            Get all Films details created 
+            </summary>
+            <returns>Return all Films</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
         <member name="M:CineAPI.Controllers.FilmsController.CountRegisters">
             <summary>
             Return total of Registers created

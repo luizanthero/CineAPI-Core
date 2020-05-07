@@ -22,6 +22,23 @@
             <response code="200">Success</response>
             <response code="500">Internal Error</response>
         </member>
+        <member name="M:CineAPI.Controllers.ExhibitionsController.GetExhibitionsDetails">
+            <summary>
+            Get all Exhibitions details created 
+            </summary>
+            <returns>Return all Exhibitons</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.ExhibitionsController.GetExhibitionsDetailsById(System.Int32)">
+            <summary>
+            Get a Exhibition details by Id
+            </summary>
+            <param name="id"></param>
+            <returns>Return a Exhibiton</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
         <member name="M:CineAPI.Controllers.ExhibitionsController.CountRegisters">
             <summary>
             Return total of registers created

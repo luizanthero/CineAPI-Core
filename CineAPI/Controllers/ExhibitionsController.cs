@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CineAPI.Business.Entities;
 using CineAPI.Models;
+using CineAPI.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,6 +41,27 @@ namespace CineAPI.Controllers
         [HttpGet("paginate/{page}/{limitPage}")]
         public async Task<ActionResult<IEnumerable<Exhibition>>> GetExhibitiosPaginate(int page, int limitPage)
             => Ok(await business.GetAllPaginate(page, limitPage));
+
+        /// <summary>
+        /// Get all Exhibitions details created 
+        /// </summary>
+        /// <returns>Return all Exhibitons</returns>
+        /// <response code="200">Success</response>
+        /// <response code="500">Internal Error</response>
+        [HttpGet("details")]
+        public async Task<ActionResult<IEnumerable<ExhibitionDetailsViewModel>>> GetExhibitionsDetails()
+            => Ok(await business.GetAllDetails());
+
+        /// <summary>
+        /// Get a Exhibition details by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Return a Exhibiton</returns>
+        /// <response code="200">Success</response>
+        /// <response code="500">Internal Error</response>
+        [HttpGet("details/{id}")]
+        public async Task<ActionResult<IEnumerable<ExhibitionDetailsViewModel>>> GetExhibitionsDetailsById(int id)
+            => Ok(await business.GetDetails(id));
 
         /// <summary>
         /// Return total of registers created

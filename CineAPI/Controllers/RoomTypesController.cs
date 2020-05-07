@@ -43,6 +43,27 @@ namespace CineAPI.Controllers
             => Ok(await business.GetAllPaginate(page, limitPage));
 
         /// <summary>
+        /// Get all Room Types details created 
+        /// </summary>
+        /// <returns>Return all Room Types</returns>
+        /// <response code="200">Success</response>
+        /// <response code="500">Internal Error</response>
+        [HttpGet("details")]
+        public async Task<ActionResult<IEnumerable<RoomTypeDetailsViewModel>>> GetRoomTypesDetails()
+            => Ok(await business.GetAllDetails());
+
+        /// <summary>
+        /// Get all Room Types details created 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Return all Room Types</returns>
+        /// <response code="200">Success</response>
+        /// <response code="500">Internal Error</response>
+        [HttpGet("details/{id}")]
+        public async Task<ActionResult<RoomTypeDetailsViewModel>> GetRoomTypeDetails(int id)
+            => Ok(await business.GetDetails(id));
+
+        /// <summary>
         /// Return total of Registers created
         /// </summary>
         /// <returns>Return total of Registers</returns>

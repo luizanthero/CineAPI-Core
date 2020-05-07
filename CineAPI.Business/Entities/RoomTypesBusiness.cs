@@ -64,7 +64,7 @@ namespace CineAPI.Business.Entities
             => await context.RoomTypes.Where(item => item.IsActived).Skip((page - 1) * limitPage).Take(limitPage).ToListAsync();
 
         public async Task<RoomType> GetById(int id)
-            => await context.RoomTypes.FirstOrDefaultAsync(item => item.IsActived && item.id == id);
+            => await context.RoomTypes.FirstOrDefaultAsync(item => item.id == id);
 
         public async Task<IEnumerable<RoomType>> GetByDescription(string description)
             => await context.RoomTypes.Where(item => item.IsActived && item.Description.Contains(description)).ToListAsync();

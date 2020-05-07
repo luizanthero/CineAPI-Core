@@ -67,7 +67,7 @@ namespace CineAPI.Business.Entities
             => await context.Films.FirstOrDefaultAsync(item => item.id == id);
 
         public async Task<IEnumerable<Film>> GetByName(string name)
-            => await context.Films.Where(item => item.Name.Contains(name)).ToListAsync();
+            => await context.Films.Where(item => item.IsActived && item.Name.Contains(name)).ToListAsync();
 
         public async Task<Film> GetByApiCode(string apiCode)
             => await context.Films.FirstOrDefaultAsync(item => item.ApiCode == apiCode);

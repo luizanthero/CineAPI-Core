@@ -25,5 +25,9 @@ namespace CineAPI.Models
         public DateTime created_at { get; set; }
 
         public DateTime updated_at { get; set; }
+
+        public virtual Film Film { get; set; }
+        public virtual Room Room { get; set; }
+        public virtual Schedule Schedule { get; set; }
     }
 }

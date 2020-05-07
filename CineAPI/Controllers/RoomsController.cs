@@ -6,7 +6,6 @@ using CineAPI.Models;
 using CineAPI.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Razor.Language.Extensions;
 
 namespace CineAPI.Controllers
 {

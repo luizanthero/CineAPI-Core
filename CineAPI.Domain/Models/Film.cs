@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -23,5 +24,7 @@ namespace CineAPI.Models
         public DateTime created_at { get; set; }
 
         public DateTime updated_at { get; set; }
+
+        public virtual ICollection<Exhibition> Exhibitions { get; set; }
     }
 }

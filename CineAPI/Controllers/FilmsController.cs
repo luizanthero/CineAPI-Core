@@ -53,6 +53,17 @@ namespace CineAPI.Controllers
             => Ok(await business.GetAllDetails());
 
         /// <summary>
+        /// Get a Film details by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Return a Film</returns>
+        /// <response code="200">Success</response>
+        /// <response code="500">Internal Error</response>
+        [HttpGet("details/{id}")]
+        public async Task<ActionResult<FilmDetailsViewModel>> GetFilmDetails(int id)
+            => Ok(await business.GetDetails(id));
+
+        /// <summary>
         /// Return total of Registers created
         /// </summary>
         /// <returns>Return total of Registers</returns>

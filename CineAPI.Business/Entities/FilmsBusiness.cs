@@ -3,9 +3,12 @@ using CineAPI.Models;
 using CineAPI.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace CineAPI.Business.Entities
@@ -112,20 +115,55 @@ namespace CineAPI.Business.Entities
             => await context.Films.CountAsync(item => !item.IsActived);
 
         public async Task<IEnumerable<FilmDetailsViewModel>> GetAllDetails()
-            => await context.Films.Include(item => item.Exhibitions)
-                .Where(item => item.IsActived).Select(item => new FilmDetailsViewModel()
-                {
-                    id = item.id,
-                    Name = item.Name,
-                    ApiCode = item.ApiCode,
-                    Exhibitions = ExhibitionDetailsViewModel.ConvertTo(item.Exhibitions),
-                    created_at = item.created_at,
-                    updated_at = item.updated_at
-                }).ToListAsync();
-
-        public Task<FilmDetailsViewModel> GetDetails(int id)
         {
-            throw new NotImplementedException();
+            List<FilmDetailsViewModel> result = await (from film in context.Films
+                                                       let exhibitions = (ICollection<ExhibitionDetailsViewModel>)context.Exhibitions
+                                                           .Include(item => item.Room).Include(item => item.Schedule)
+                                                           .Where(item => item.FilmId == film.id)
+                                                           .Select(item => new ExhibitionDetailsViewModel()
+                                                           {
+                                                               id = item.id,
+                                                               Room = item.Room.Name,
+                                                               Schedule = item.Schedule.Description,
+                                                               created_at = item.created_at,
+                                                               updated_at = item.updated_at
+                                                           })
+                                                       where film.IsActived
+                                                       select new FilmDetailsViewModel()
+                                                       {
+                                                           id = film.id,
+                                                           Name = film.Name,
+                                                           ApiCode = film.ApiCode,
+                                                           Exhibitions = exhibitions
+                                                       }).ToListAsync();
+
+            return result;
+        }
+
+        public async Task<FilmDetailsViewModel> GetDetails(int id)
+        {
+            FilmDetailsViewModel result = await (from film in context.Films
+                                                 let exhibitions = (ICollection<ExhibitionDetailsViewModel>)context.Exhibitions
+                                                     .Include(item => item.Room).Include(item => item.Schedule)
+                                                     .Where(item => item.id == film.id)
+                                                     .Select(item => new ExhibitionDetailsViewModel()
+                                                     {
+                                                         id = item.id,
+                                                         Room = item.Room.Name,
+                                                         Schedule = item.Schedule.Description,
+                                                         created_at = item.created_at,
+                                                         updated_at = item.updated_at
+                                                     })
+                                                 where film.IsActived && film.id == id
+                                                 select new FilmDetailsViewModel()
+                                                 {
+                                                     id = film.id,
+                                                     Name = film.Name,
+                                                     ApiCode = film.ApiCode,
+                                                     Exhibitions = exhibitions
+                                                 }).FirstOrDefaultAsync();
+
+            return result;
         }
     }
 }

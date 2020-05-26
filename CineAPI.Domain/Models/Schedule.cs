@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CineAPI.Models
 {
-    [Table("schedules")]
+    [Table("Schedule")]
     public class Schedule
     {
         [Key]

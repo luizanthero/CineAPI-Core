@@ -12,6 +12,8 @@ namespace CineAPI.Models
         public DbSet<RoomType> RoomTypes { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Screen> Screens { get; set; }
+        public DbSet<Tokens> Tokens { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) { }
     }

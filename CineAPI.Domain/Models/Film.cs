@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CineAPI.Models
 {
-    [Table("Film")]
+    [Table(name: "Film")]
     public class Film
     {
         [Key]

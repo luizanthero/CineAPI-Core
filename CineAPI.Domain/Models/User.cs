@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace CineAPI.Models
 {
@@ -17,13 +18,17 @@ namespace CineAPI.Models
         public string Email { get; set; }
 
         [Required]
+        [JsonIgnore]
         public string Password { get; set; }
 
         [Required]
+        [JsonIgnore]
         public bool IsActived { get; set; } = true;
 
+        [JsonIgnore]
         public DateTime created_at { get; set; }
 
+        [JsonIgnore]
         public DateTime updated_at { get; set; }
     }
 }

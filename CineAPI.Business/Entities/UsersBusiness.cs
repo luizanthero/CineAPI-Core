@@ -1,21 +1,75 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
+using CineAPI.Business.Helpers;
 using CineAPI.Business.Interfaces;
 using CineAPI.Models;
 using CineAPI.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CineAPI.Business.Entities
 {
     public class UsersBusiness : IRepository<User>
     {
         private readonly AppDbContext context;
+        private readonly TokensBusiness tokensBusiness;
 
-        public UsersBusiness(AppDbContext context)
+        private readonly Settings settings;
+
+        public UsersBusiness(AppDbContext context, TokensBusiness tokensBusiness, IOptions<Settings> settings)
         {
             this.context = context;
+            this.tokensBusiness = tokensBusiness;
+            this.settings = settings.Value;
+        }
+
+        public async Task<Tokens> Authenticate(string username, string password)
+        {
+            try
+            {
+                User user = await context.Users
+                    .SingleOrDefaultAsync(item => item.Username.Equals(username) && item.Password.Equals(password));
+
+                if (user is null)
+                    return null;
+
+                Tokens token = await tokensBusiness.GetbyUserId(user.id);
+
+                if (!(token is null))
+                    return token;
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(settings.Secret);
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]{
+                    new Claim(ClaimTypes.Name, user.id.ToString())
+                }),
+                    Expires = DateTime.UtcNow.AddDays(7),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                };
+
+                var stringToken = tokenHandler.CreateToken(tokenDescriptor);
+                token = await tokensBusiness.Create(new Tokens
+                {
+                    UserId = user.id,
+                    Token = tokenHandler.WriteToken(stringToken),
+                    Type = "Jwt",
+                    IsRevoked = true
+                });
+
+                return token;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<int> CountActived()

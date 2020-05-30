@@ -93,6 +93,9 @@ namespace CineAPI.Business.Entities
         public async Task<Tokens> GetById(int id)
             => await context.Tokens.Include(item => item.User).FirstOrDefaultAsync(item => item.id == id);
 
+        public async Task<Tokens> GetbyUserId(int userId)
+            => await context.Tokens.Include(item => item.User).FirstOrDefaultAsync(item => item.UserId.Equals(userId));
+
         public async Task<IEnumerable<ComboBoxViewModel>> GetComboBox()
             => await context.Tokens
                 .Select(item => new ComboBoxViewModel() { id = item.id, Value = item.Token }).ToListAsync();

@@ -6,12 +6,17 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
 using System.Reflection;
+using CineAPI.Business.Helpers;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CineAPI
 {
@@ -31,7 +36,29 @@ namespace CineAPI
 
             services.AddCors();
 
-            services.AddDbContext<AppDbContext>(options => 
+            var settingsSection = Configuration.GetSection("Settings");
+            services.Configure<Settings>(settingsSection);
+
+            var settings = settingsSection.Get<Settings>();
+            var key = Encoding.ASCII.GetBytes(settings.Secret);
+            services.AddAuthentication(item =>
+            {
+                item.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                item.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(item =>
+            {
+                item.RequireHttpsMetadata = false;
+                item.SaveToken = true;
+                item.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+            services.AddDbContext<AppDbContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("ConnectionMysql"), options =>
                 {
                     options.ServerVersion(new Version(5, 7, 17), ServerType.MySql)
@@ -64,12 +91,16 @@ namespace CineAPI
                 item.IncludeXmlComments(xmlPath);
             });
 
+            services.AddScoped<Settings>();
+
             services.AddScoped<ExhibitionsBusiness>();
             services.AddScoped<FilmsBusiness>();
             services.AddScoped<RoomsBusiness>();
             services.AddScoped<RoomTypesBusiness>();
             services.AddScoped<SchedulesBusiness>();
             services.AddScoped<ScreensBusiness>();
+            services.AddScoped<UsersBusiness>();
+            services.AddScoped<TokensBusiness>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,6 +124,9 @@ namespace CineAPI
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseRouting();
 

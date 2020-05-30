@@ -683,5 +683,22 @@
             <response code="200">Success</response>
             <response code="500">Internal Error</response>
         </member>
+        <member name="M:CineAPI.Controllers.UsersController.Authenticate(CineAPI.ViewModels.UserAuthenticate)">
+            <summary>
+            Authenticate a User
+            </summary>
+            <remarks>
+            Sample request:
+            
+                {
+                    "Username": "teste",
+                    "Password": "teste"
+                }
+            </remarks>
+            <param name="user"></param>
+            <returns>Return a Valid Token</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
     </members>
 </doc>

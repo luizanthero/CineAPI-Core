@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CineAPI.Business.Entities;
 using CineAPI.Models;
 using CineAPI.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace CineAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RoomsController : ControllerBase
     {
         private readonly RoomsBusiness business;

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using CineAPI.Business.Entities;
 using CineAPI.Models;
 using CineAPI.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace CineAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly UsersBusiness business;
@@ -35,6 +37,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpPost("authenticate")]
+        [AllowAnonymous]
         public async Task<ActionResult<Tokens>> Authenticate(UserAuthenticate user)
         {
             try

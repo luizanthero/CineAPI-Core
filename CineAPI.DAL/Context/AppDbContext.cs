@@ -8,6 +8,9 @@ namespace CineAPI.Models
 
         public DbSet<Exhibition> Exhibitions { get; set; }
         public DbSet<Film> Films { get; set; }
+        public DbSet<Historic> Historics { get; set; }
+        public DbSet<HistoricType> HistoricTypes { get; set; }
+        public DbSet<Role> Roles { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<RoomType> RoomTypes { get; set; }
         public DbSet<Schedule> Schedules { get; set; }

@@ -29,7 +29,7 @@ namespace CineAPI.Business.Entities
             this.settingsOptions = settingsOptions.Value;
         }
 
-        public async Task<Tokens> Authenticate(string username, string password)
+        public async Task<string> Authenticate(string username, string password)
         {
             try
             {
@@ -39,32 +39,25 @@ namespace CineAPI.Business.Entities
                 if (user is null)
                     return null;
 
-                Tokens token = await tokensBusiness.GetbyUserId(user.id);
-
-                if (!(token is null))
-                    return token;
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.id.ToString()),
+                    new Claim(ClaimTypes.Role, "Get"),
+                    new Claim(ClaimTypes.Role, "Paginate")
+                }.ToArray();
 
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(settingsOptions.Secret);
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    Subject = new ClaimsIdentity(new Claim[]{
-                    new Claim(ClaimTypes.Name, user.id.ToString())
-                }),
-                    Expires = DateTime.UtcNow.AddDays(7),
+                    Subject = new ClaimsIdentity(claims),
+                    Expires = DateTime.UtcNow.AddDays(1),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
 
                 var stringToken = tokenHandler.CreateToken(tokenDescriptor);
-                token = await tokensBusiness.Create(new Tokens
-                {
-                    UserId = user.id,
-                    Token = tokenHandler.WriteToken(stringToken),
-                    Type = "Jwt",
-                    IsRevoked = true
-                });
 
-                return token;
+                return tokenHandler.WriteToken(stringToken);
             }
             catch (Exception)
             {

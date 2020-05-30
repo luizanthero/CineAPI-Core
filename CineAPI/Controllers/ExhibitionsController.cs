@@ -29,6 +29,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<Exhibition>>> GetExhibitions()
             => Ok(await business.GetAll());
 
@@ -41,6 +42,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("paginate/{page}/{limitPage}")]
+        [Authorize(Roles = "Paginate")]
         public async Task<ActionResult<IEnumerable<Exhibition>>> GetExhibitiosPaginate(int page, int limitPage)
             => Ok(await business.GetAllPaginate(page, limitPage));
 

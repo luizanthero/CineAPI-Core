@@ -20,13 +20,13 @@ namespace CineAPI.Business.Entities
         private readonly AppDbContext context;
         private readonly TokensBusiness tokensBusiness;
 
-        private readonly Settings settings;
+        private readonly SettingsOptions settingsOptions;
 
-        public UsersBusiness(AppDbContext context, TokensBusiness tokensBusiness, IOptions<Settings> settings)
+        public UsersBusiness(AppDbContext context, TokensBusiness tokensBusiness, IOptions<SettingsOptions> settingsOptions)
         {
             this.context = context;
             this.tokensBusiness = tokensBusiness;
-            this.settings = settings.Value;
+            this.settingsOptions = settingsOptions.Value;
         }
 
         public async Task<Tokens> Authenticate(string username, string password)
@@ -45,7 +45,7 @@ namespace CineAPI.Business.Entities
                     return token;
 
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(settings.Secret);
+                var key = Encoding.ASCII.GetBytes(settingsOptions.Secret);
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new Claim[]{

@@ -36,11 +36,11 @@ namespace CineAPI
 
             services.AddCors();
 
-            var settingsSection = Configuration.GetSection("Settings");
-            services.Configure<Settings>(settingsSection);
+            var settingsOptionsSection = Configuration.GetSection("SettingsOptions");
+            services.Configure<SettingsOptions>(settingsOptionsSection);
 
-            var settings = settingsSection.Get<Settings>();
-            var key = Encoding.ASCII.GetBytes(settings.Secret);
+            var settingsOptions = settingsOptionsSection.Get<SettingsOptions>();
+            var key = Encoding.ASCII.GetBytes(settingsOptions.Secret);
             services.AddAuthentication(item =>
             {
                 item.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -91,7 +91,7 @@ namespace CineAPI
                 item.IncludeXmlComments(xmlPath);
             });
 
-            services.AddScoped<Settings>();
+            services.AddScoped<SettingsOptions>();
 
             services.AddScoped<ExhibitionsBusiness>();
             services.AddScoped<FilmsBusiness>();

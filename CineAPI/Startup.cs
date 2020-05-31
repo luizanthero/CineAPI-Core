@@ -16,6 +16,7 @@ using CineAPI.Business.Helpers;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace CineAPI
 {
@@ -110,6 +111,8 @@ namespace CineAPI
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 
                 item.IncludeXmlComments(xmlPath);
+
+                item.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
             });
 
             services.AddScoped<SettingsOptions>();

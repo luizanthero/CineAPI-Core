@@ -42,7 +42,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("paginate/{page}/{limitPage}")]
-        [Authorize(Roles = "Paginate")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<Exhibition>>> GetExhibitiosPaginate(int page, int limitPage)
             => Ok(await business.GetAllPaginate(page, limitPage));
 
@@ -53,6 +53,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("details")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<ExhibitionDetailsViewModel>>> GetExhibitionsDetails()
             => Ok(await business.GetAllDetails());
 
@@ -64,6 +65,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("details/{id}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<ExhibitionDetailsViewModel>>> GetExhibitionsDetailsById(int id)
             => Ok(await business.GetDetails(id));
 
@@ -74,6 +76,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("count")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<int>> CountRegisters()
         {
             int count = await business.CountActived();
@@ -92,6 +95,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("{id}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<Exhibition>> GetExhibition(int id)
         {
             Exhibition exhibition = await business.GetById(id);
@@ -110,6 +114,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("film/{id}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<Exhibition>>> GetByFilm(int id)
         {
             IEnumerable<Exhibition> exhibitions = await business.GetByFilm(id);
@@ -128,6 +133,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("room/{id}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<Exhibition>>> GetByRoom(int id)
         {
             IEnumerable<Exhibition> exhibitions = await business.GetByRoom(id);
@@ -146,6 +152,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("schedule/{id}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<Exhibition>>> GetBySchedule(int id)
         {
             IEnumerable<Exhibition> exhibitions = await business.GetBySchedule(id);
@@ -173,6 +180,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpPost]
+        [Authorize(Roles = "Post")]
         public async Task<ActionResult<Exhibition>> PostExhibition(Exhibition exhibition)
         {
             try
@@ -204,6 +212,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpPut("{id}")]
+        [Authorize(Roles = "Put")]
         public async Task<IActionResult> PutExhibition(int id, Exhibition exhibition)
         {
             if (id != exhibition.id)
@@ -223,6 +232,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Delete")]
         public async Task<IActionResult> DeleteExhibition(int id)
         {
             if (await business.DeleteById(id))

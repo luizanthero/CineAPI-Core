@@ -29,6 +29,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<RoomType>>> GetRoomTypes()
             => Ok(await business.GetAll());
 
@@ -41,6 +42,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("paginate/{page}/{limitPage}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<RoomType>>> GetRoomTypesPaginate(int page, int limitPage)
             => Ok(await business.GetAllPaginate(page, limitPage));
 
@@ -51,6 +53,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("details")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<RoomTypeDetailsViewModel>>> GetRoomTypesDetails()
             => Ok(await business.GetAllDetails());
 
@@ -62,6 +65,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("details/{id}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<RoomTypeDetailsViewModel>> GetRoomTypeDetails(int id)
             => Ok(await business.GetDetails(id));
 
@@ -72,6 +76,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("count")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<int>> CountRegisters()
         {
             var count = await business.CountActived();
@@ -90,6 +95,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("{id}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<RoomType>> GetRoomType(int id)
         {
             RoomType roomType = await business.GetById(id);
@@ -108,6 +114,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("description/{description}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<RoomType>>> GetByDescription(string description)
         {
             IEnumerable<RoomType> roomTypes = await business.GetByDescription(description);
@@ -125,6 +132,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("comboBox")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<ComboBoxViewModel>>> GetComboBox()
             => Ok(await business.GetComboBox());
 
@@ -143,6 +151,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpPost]
+        [Authorize(Roles = "Post")]
         public async Task<ActionResult<RoomType>> PostRoomType(RoomType roomType)
         {
             try
@@ -172,6 +181,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpPut("{id}")]
+        [Authorize(Roles = "Put")]
         public async Task<IActionResult> PutRoomType(int id, RoomType roomType)
         {
             if (id != roomType.id)
@@ -191,6 +201,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Delete")]
         public async Task<IActionResult> DeleteRoomType(int id)
         {
             if (await business.DeleteById(id))

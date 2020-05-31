@@ -29,6 +29,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<Screen>>> GetScreens()
             => Ok(await business.GetAll());
 
@@ -41,6 +42,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("paginate/{page}/{limitPage}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<Screen>>> GetScreensPaginate(int page, int limitPage)
             => Ok(await business.GetAllPaginate(page, limitPage));
 
@@ -51,6 +53,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("count")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<int>> CountRegisters()
         {
             int count = await business.CountActived();
@@ -69,6 +72,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("{id}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<Screen>> GetScreen(int id)
         {
             Screen screen = await business.GetById(id);
@@ -87,6 +91,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("name/{name}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<Screen>>> GetBySize(string size)
         {
             IEnumerable<Screen> screens = await business.GetBySize(size);
@@ -104,6 +109,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("comboBox")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<ComboBoxViewModel>>> GetComboBox()
             => Ok(await business.GetComboBox());
 
@@ -122,6 +128,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpPost]
+        [Authorize(Roles = "Post")]
         public async Task<ActionResult<Screen>> PostScreen(Screen screen)
         {
             try
@@ -152,6 +159,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpPut("{id}")]
+        [Authorize(Roles = "Put")]
         public async Task<IActionResult> PutScreen(int id, Screen screen)
         {
             if (id != screen.id)
@@ -171,6 +179,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Delete")]
         public async Task<IActionResult> DeleteScreen(int id)
         {
             if (await business.DeleteById(id))

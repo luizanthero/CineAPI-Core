@@ -29,6 +29,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<Room>>> GetRooms()
             => Ok(await business.GetAll());
 
@@ -41,6 +42,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("paginate/{page}/{limitPage}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<Room>>> GetRoomsPaginate(int page, int limitPage)
             => Ok(await business.GetAllPaginate(page, limitPage));
 
@@ -51,6 +53,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("details")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<RoomDetailsViewModel>>> GetRoomsDetails()
             => Ok(await business.GetAllDetails());
 
@@ -62,6 +65,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("details/{id}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<RoomDetailsViewModel>>> GetRoomDetails(int id)
             => Ok(await business.GetDetails(id));
 
@@ -70,6 +74,7 @@ namespace CineAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("count")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<int>> CountRegisters()
         {
             var count = await business.CountActived();
@@ -88,6 +93,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("{id}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<Room>> GetRoom(int id)
         {
             Room room = await business.GetById(id);
@@ -106,6 +112,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("roomType/{id}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<Room>>> GetByRoomType(int id)
         {
             IEnumerable<Room> rooms = await business.GetByRoomType(id);
@@ -124,6 +131,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("screen/{id}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<Room>>> GetByScreen(int id)
         {
             IEnumerable<Room> rooms = await business.GetByScreen(id);
@@ -142,6 +150,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("name/{name}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<Room>>> GetByName(string name)
         {
             IEnumerable<Room> rooms = await business.GetByName(name);
@@ -159,6 +168,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("comboBox")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<ComboBoxViewModel>>> GetComboBox()
             => Ok(await business.GetComboBox());
 
@@ -179,6 +189,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpPost]
+        [Authorize(Roles = "Post")]
         public async Task<ActionResult<Room>> PostRoom(Room room)
         {
             try
@@ -211,6 +222,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpPut("{id}")]
+        [Authorize(Roles = "Put")]
         public async Task<IActionResult> PutRoom(int id, Room room)
         {
             if (id != room.id)
@@ -230,6 +242,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Delete")]
         public async Task<IActionResult> DeleteRoom(int id)
         {
             if (await business.DeleteById(id))

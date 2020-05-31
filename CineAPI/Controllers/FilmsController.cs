@@ -29,6 +29,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<Film>>> GetFilms()
             => Ok(await business.GetAll());
 
@@ -41,6 +42,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("paginate/{page}/{limitPage}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<Film>>> GetFilmsPaginate(int page, int limitPage)
             => Ok(await business.GetAllPaginate(page, limitPage));
 
@@ -51,6 +53,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("details")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<FilmDetailsViewModel>>> GetFilmsDetails()
             => Ok(await business.GetAllDetails());
 
@@ -62,6 +65,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("details/{id}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<FilmDetailsViewModel>> GetFilmDetails(int id)
             => Ok(await business.GetDetails(id));
 
@@ -72,6 +76,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("count")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<int>> CountRegisters()
         {
             var count = await business.CountActived();
@@ -90,6 +95,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("{id}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<Film>> GetFilm(int id)
         {
             Film film = await business.GetById(id);
@@ -108,6 +114,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("name/{name}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<Film>>> GetByName(string name)
         {
             IEnumerable<Film> films = await business.GetByName(name);
@@ -126,6 +133,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("apiCode/{apiCode}")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<Film>> GetByApiCode(string apiCode)
         {
             Film film = await business.GetByApiCode(apiCode);
@@ -143,6 +151,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("comboBox")]
+        [Authorize(Roles = "Get")]
         public async Task<ActionResult<IEnumerable<ComboBoxViewModel>>> GetComboBox()
         {
             var films = await business.GetComboBox();
@@ -170,6 +179,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpPost]
+        [Authorize(Roles = "Post")]
         public async Task<ActionResult<Film>> PostFilm(Film film)
         {
             try
@@ -201,6 +211,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpPut("{id}")]
+        [Authorize(Roles = "Put")]
         public async Task<IActionResult> PutFilm(int id, Film film)
         {
             if (id != film.id)
@@ -220,6 +231,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Delete")]
         public async Task<IActionResult> DeleteFilm(int id)
         {
             if (await business.DeleteById(id))

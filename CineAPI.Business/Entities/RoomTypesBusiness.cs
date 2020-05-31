@@ -60,8 +60,14 @@ namespace CineAPI.Business.Entities
         public async Task<IEnumerable<RoomType>> GetAll()
             => await context.RoomTypes.Where(item => item.IsActived).ToListAsync();
 
-        public async Task<IEnumerable<RoomType>> GetAllPaginate(int page, int limitPage)
-            => await context.RoomTypes.Where(item => item.IsActived).Skip((page - 1) * limitPage).Take(limitPage).ToListAsync();
+        public async Task<PaginationViewModel<RoomType>> GetAllPaginate(int page, int limitPage)
+            => new PaginationViewModel<RoomType>
+            {
+                Page = page,
+                LimitPage = limitPage,
+                TotalPages = await CountActived(),
+                Data = await context.RoomTypes.Where(item => item.IsActived).Skip((page - 1) * limitPage).Take(limitPage).ToListAsync()
+            };
 
         public async Task<RoomType> GetById(int id)
             => await context.RoomTypes.FirstOrDefaultAsync(item => item.id == id);

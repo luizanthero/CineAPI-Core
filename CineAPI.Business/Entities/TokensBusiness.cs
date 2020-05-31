@@ -87,8 +87,14 @@ namespace CineAPI.Business.Entities
         public async Task<IEnumerable<Tokens>> GetAll()
             => await context.Tokens.Include(item => item.User).ToListAsync();
 
-        public async Task<IEnumerable<Tokens>> GetAllPaginate(int page, int limitPage)
-            => await context.Tokens.Include(item => item.User).Skip((page - 1) * limitPage).Take(limitPage).ToListAsync();
+        public async Task<PaginationViewModel<Tokens>> GetAllPaginate(int page, int limitPage)
+            => new PaginationViewModel<Tokens>
+            {
+                Page = page,
+                LimitPage = limitPage,
+                TotalPages = await CountActived(),
+                Data = await context.Tokens.Include(item => item.User).Skip((page - 1) * limitPage).Take(limitPage).ToListAsync()
+            };
 
         public async Task<Tokens> GetById(int id)
             => await context.Tokens.Include(item => item.User).FirstOrDefaultAsync(item => item.id == id);

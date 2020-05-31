@@ -8,7 +8,7 @@ namespace CineAPI.Business.Interfaces
     {
         Task<IEnumerable<T>> GetAll();
 
-        Task<IEnumerable<T>> GetAllPaginate(int page, int limitPage);
+        Task<PaginationViewModel<T>> GetAllPaginate(int page, int limitPage);
 
         Task<T> GetById(int id);
 

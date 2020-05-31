@@ -60,8 +60,14 @@ namespace CineAPI.Business.Entities
         public async Task<IEnumerable<Film>> GetAll()
             => await context.Films.Where(item => item.IsActived).ToListAsync();
 
-        public async Task<IEnumerable<Film>> GetAllPaginate(int page, int limitPage)
-            => await context.Films.Where(item => item.IsActived).Skip((page - 1) * limitPage).Take(limitPage).ToListAsync();
+        public async Task<PaginationViewModel<Film>> GetAllPaginate(int page, int limitPage)
+            => new PaginationViewModel<Film>
+            {
+                Page = page,
+                LimitPage = limitPage,
+                TotalPages = await CountActived(),
+                Data = await context.Films.Where(item => item.IsActived).Skip((page - 1) * limitPage).Take(limitPage).ToListAsync()
+            };
 
         public async Task<Film> GetById(int id)
             => await context.Films.FirstOrDefaultAsync(item => item.id == id);

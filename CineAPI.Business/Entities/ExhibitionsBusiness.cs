@@ -130,10 +130,16 @@ namespace CineAPI.Business.Entities
             => await context.Exhibitions
                 .Include(item => item.Film).Include(item => item.Room).Include(item => item.Schedule).ToListAsync();
 
-        public async Task<IEnumerable<Exhibition>> GetAllPaginate(int page, int limitPage)
-            => await context.Exhibitions
-                .Include(item => item.Film).Include(item => item.Room).Include(item => item.Schedule)
-                .Skip((page - 1) * limitPage).Take(limitPage).ToListAsync();
+        public async Task<PaginationViewModel<Exhibition>> GetAllPaginate(int page, int limitPage)
+            => new PaginationViewModel<Exhibition>
+            {
+                Page = page,
+                LimitPage = page,
+                TotalPages = await CountActived(),
+                Data = await context.Exhibitions
+                    .Include(item => item.Film).Include(item => item.Room).Include(item => item.Schedule)
+                    .Skip((page - 1) * limitPage).Take(limitPage).ToListAsync()
+            };
 
         public async Task<Exhibition> GetById(int id)
             => await context.Exhibitions

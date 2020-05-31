@@ -66,8 +66,14 @@ namespace CineAPI.Business.Entities
         public async Task<IEnumerable<Role>> GetAll()
             => await context.Roles.Where(item => item.IsActived).ToListAsync();
 
-        public async Task<IEnumerable<Role>> GetAllPaginate(int page, int limitPage)
-            => await context.Roles.Where(item => item.IsActived).Skip((page - 1) * limitPage).Take(limitPage).ToListAsync();
+        public async Task<PaginationViewModel<Role>> GetAllPaginate(int page, int limitPage)
+            => new PaginationViewModel<Role>
+            {
+                Page = page,
+                LimitPage = limitPage,
+                TotalPages = await CountActived(),
+                Data = await context.Roles.Where(item => item.IsActived).Skip((page - 1) * limitPage).Take(limitPage).ToListAsync()
+            };
 
         public async Task<IEnumerable<Role>> GetByUserId(int userId)
             => await (from roles in context.Roles

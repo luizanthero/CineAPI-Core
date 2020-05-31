@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CineAPI.ViewModels
 {
-    public class UserAuthenticate
+    public class UserAuthenticateViewModel
     {
         [Required]
         public string Username { get; set; }

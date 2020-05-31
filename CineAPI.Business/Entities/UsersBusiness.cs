@@ -23,7 +23,8 @@ namespace CineAPI.Business.Entities
 
         private readonly SettingsOptions settingsOptions;
 
-        public UsersBusiness(AppDbContext context, TokensBusiness tokensBusiness, RolesBusiness rolesBusiness, IOptions<SettingsOptions> settingsOptions)
+        public UsersBusiness(AppDbContext context, TokensBusiness tokensBusiness, RolesBusiness rolesBusiness,
+        IOptions<SettingsOptions> settingsOptions)
         {
             this.context = context;
             this.tokensBusiness = tokensBusiness;
@@ -31,14 +32,35 @@ namespace CineAPI.Business.Entities
             this.settingsOptions = settingsOptions.Value;
         }
 
+        public async Task<User> Register(User user)
+        {
+            try
+            {
+                user.Password = HashOptions.CreatePasswordHash(user.Password);
+
+                context.Users.Add(user);
+
+                await context.SaveChangesAsync();
+
+                return user;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public async Task<string> Authenticate(string username, string password)
         {
             try
             {
                 User user = await context.Users
-                    .SingleOrDefaultAsync(item => item.Username.Equals(username) && item.Password.Equals(password));
+                    .SingleOrDefaultAsync(item => item.Username.Equals(username));
 
                 if (user is null)
+                    return null;
+
+                if (!HashOptions.VerifyPasswordHash(password, user.Password))
                     return null;
 
                 var userRoles = await rolesBusiness.GetByUserId(user.id);

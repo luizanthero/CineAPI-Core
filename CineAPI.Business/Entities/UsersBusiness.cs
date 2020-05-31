@@ -45,10 +45,11 @@ namespace CineAPI.Business.Entities
 
                 List<Claim> claims = new List<Claim>();
                 claims.Add(new Claim(ClaimTypes.Name, user.id.ToString()));
-                userRoles.ToList().ForEach(role =>
-                {
-                    claims.Add(new Claim(ClaimTypes.Role, role.Description));
-                });
+                if (!(userRoles is null))
+                    userRoles.ToList().ForEach(role =>
+                    {
+                        claims.Add(new Claim(ClaimTypes.Role, role.Description));
+                    });
 
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(settingsOptions.Secret);

@@ -19,13 +19,15 @@ namespace CineAPI.Business.Entities
     {
         private readonly AppDbContext context;
         private readonly TokensBusiness tokensBusiness;
+        private readonly RolesBusiness rolesBusiness;
 
         private readonly SettingsOptions settingsOptions;
 
-        public UsersBusiness(AppDbContext context, TokensBusiness tokensBusiness, IOptions<SettingsOptions> settingsOptions)
+        public UsersBusiness(AppDbContext context, TokensBusiness tokensBusiness, RolesBusiness rolesBusiness, IOptions<SettingsOptions> settingsOptions)
         {
             this.context = context;
             this.tokensBusiness = tokensBusiness;
+            this.rolesBusiness = rolesBusiness;
             this.settingsOptions = settingsOptions.Value;
         }
 
@@ -39,12 +41,14 @@ namespace CineAPI.Business.Entities
                 if (user is null)
                     return null;
 
-                var claims = new List<Claim>
+                var userRoles = await rolesBusiness.GetByUserId(user.id);
+
+                List<Claim> claims = new List<Claim>();
+                claims.Add(new Claim(ClaimTypes.Name, user.id.ToString()));
+                userRoles.ToList().ForEach(role =>
                 {
-                    new Claim(ClaimTypes.Name, user.id.ToString()),
-                    new Claim(ClaimTypes.Role, "Get"),
-                    new Claim(ClaimTypes.Role, "Paginate")
-                }.ToArray();
+                    claims.Add(new Claim(ClaimTypes.Role, role.Description));
+                });
 
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(settingsOptions.Secret);

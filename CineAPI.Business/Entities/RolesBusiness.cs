@@ -69,6 +69,9 @@ namespace CineAPI.Business.Entities
         public async Task<IEnumerable<Role>> GetAllPaginate(int page, int limitPage)
             => await context.Roles.Where(item => item.IsActived).Skip((page - 1) * limitPage).Take(limitPage).ToListAsync();
 
+        public async Task<IEnumerable<Role>> GetByUserId(int userId)
+            => await context.Roles.Where(item => item.UserId.Equals(userId)).ToListAsync();
+
         public async Task<Role> GetById(int id)
             => await context.Roles.FindAsync(id);
 

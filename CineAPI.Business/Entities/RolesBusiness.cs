@@ -70,7 +70,9 @@ namespace CineAPI.Business.Entities
             => await context.Roles.Where(item => item.IsActived).Skip((page - 1) * limitPage).Take(limitPage).ToListAsync();
 
         public async Task<IEnumerable<Role>> GetByUserId(int userId)
-            => await context.Roles.Where(item => item.UserId.Equals(userId)).ToListAsync();
+            => await (from roles in context.Roles
+                      where roles.UserRoles.Any(item => item.UserId.Equals(userId))
+                      select roles).ToListAsync();
 
         public async Task<Role> GetById(int id)
             => await context.Roles.FindAsync(id);

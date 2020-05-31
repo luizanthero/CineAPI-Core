@@ -17,7 +17,11 @@ namespace CineAPI.Models
         public DbSet<Screen> Screens { get; set; }
         public DbSet<Tokens> Tokens { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) { }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserRole>().HasKey(table => new { table.UserId, table.RoleId });
+        }
     }
 }

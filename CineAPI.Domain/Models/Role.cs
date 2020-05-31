@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,9 +12,6 @@ namespace CineAPI.Models
     {
         [Key]
         public int id { get; set; }
-
-        [ForeignKey("id")]
-        public int UserId { get; set; }
 
         [Required]
         public string Description { get; set; }
@@ -28,6 +26,6 @@ namespace CineAPI.Models
         [JsonIgnore]
         public DateTime updated_at { get; set; }
 
-        public virtual User User { get; set; }
+        public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -30,5 +31,7 @@ namespace CineAPI.Models
 
         [JsonIgnore]
         public DateTime updated_at { get; set; }
+
+        public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

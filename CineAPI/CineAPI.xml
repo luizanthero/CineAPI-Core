@@ -683,6 +683,39 @@
             <response code="200">Success</response>
             <response code="500">Internal Error</response>
         </member>
+        <member name="M:CineAPI.Controllers.UsersController.GetAll">
+            <summary>
+            Get all users created
+            </summary>
+            <returns>Return all users</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.UsersController.GetAllPaginate(System.Int32,System.Int32)">
+            <summary>
+            Get all users created with paginattion
+            </summary>
+            <returns>Return all users</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.UsersController.CountRegisters">
+            <summary>
+            Get total of registers created
+            </summary>
+            <returns>Return total of registers</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.UsersController.GetUser(System.Int32)">
+            <summary>
+            Get a User by Id
+            </summary>
+            <param name="id"></param>
+            <returns>Return a User</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
         <member name="M:CineAPI.Controllers.UsersController.Register(CineAPI.ViewModels.UserRegisterViewModel)">
             <summary>
             Register a User

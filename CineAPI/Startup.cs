@@ -113,6 +113,7 @@ namespace CineAPI
                 item.IncludeXmlComments(xmlPath);
 
                 item.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+                //item.OperationFilter<SecurityRequirementsOperationFilter>();
             });
 
             services.AddScoped<SettingsOptions>();

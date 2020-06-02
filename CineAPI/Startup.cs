@@ -85,7 +85,7 @@ namespace CineAPI
                         }
                     });
 
-                item.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                item.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
                     Description = "JWT Authorization header using the Bearer scheme.",
                     Name = "Authorization",
@@ -95,25 +95,13 @@ namespace CineAPI
                     BearerFormat = "JWT"
                 });
 
-                item.AddSecurityRequirement(new OpenApiSecurityRequirement{
-                    {
-                        new OpenApiSecurityScheme{
-                            Reference = new OpenApiReference{
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        new string[] {}
-                    }
-                });
-
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 
                 item.IncludeXmlComments(xmlPath);
 
                 item.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
-                //item.OperationFilter<SecurityRequirementsOperationFilter>();
+                item.OperationFilter<SecurityRequirementsOperationFilter>();
             });
 
             services.AddScoped<SettingsOptions>();

@@ -135,7 +135,7 @@ namespace CineAPI.Controllers
                 string token = await business.Authenticate(user.Username, user.Password);
 
                 if (string.IsNullOrEmpty(token))
-                    return BadRequest(new { message = "Username or Password is incorrect!" });
+                    return BadRequest("Username or Password is incorrect!");
 
                 return Ok(token);
             }

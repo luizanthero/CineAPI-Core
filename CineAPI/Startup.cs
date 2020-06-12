@@ -22,6 +22,7 @@ namespace CineAPI
 {
     public class Startup
     {
+        private readonly string corsPolicy = "MyPolicy";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -34,7 +35,10 @@ namespace CineAPI
         {
             services.AddControllersWithViews();
 
-            services.AddCors();
+            services.AddCors(options => options.AddPolicy(corsPolicy, builder =>
+            {
+                builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+            }));
 
             var settingsOptionsSection = Configuration.GetSection("SettingsOptions");
             services.Configure<SettingsOptions>(settingsOptionsSection);
@@ -140,6 +144,8 @@ namespace CineAPI
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseCors(corsPolicy);
 
             app.UseAuthentication();
             app.UseAuthorization();

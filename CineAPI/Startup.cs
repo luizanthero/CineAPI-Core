@@ -119,6 +119,7 @@ namespace CineAPI
             services.AddScoped<UsersBusiness>();
             services.AddScoped<TokensBusiness>();
             services.AddScoped<RolesBusiness>();
+            services.AddScoped<UserRolesBusiness>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

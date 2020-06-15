@@ -20,15 +20,17 @@ namespace CineAPI.Business.Entities
         private readonly AppDbContext context;
         private readonly TokensBusiness tokensBusiness;
         private readonly RolesBusiness rolesBusiness;
+        private readonly UserRolesBusiness userRolesBusiness;
 
         private readonly SettingsOptions settingsOptions;
 
         public UsersBusiness(AppDbContext context, TokensBusiness tokensBusiness, RolesBusiness rolesBusiness,
-        IOptions<SettingsOptions> settingsOptions)
+        UserRolesBusiness userRolesBusiness, IOptions<SettingsOptions> settingsOptions)
         {
             this.context = context;
             this.tokensBusiness = tokensBusiness;
             this.rolesBusiness = rolesBusiness;
+            this.userRolesBusiness = userRolesBusiness;
             this.settingsOptions = settingsOptions.Value;
         }
 
@@ -41,6 +43,12 @@ namespace CineAPI.Business.Entities
                 context.Users.Add(user);
 
                 await context.SaveChangesAsync();
+
+                await userRolesBusiness.Create(new UserRole
+                {
+                    UserId = user.id,
+                    RoleId = (int)RolesEnum.Types.Get
+                });
 
                 return user;
             }
@@ -58,10 +66,18 @@ namespace CineAPI.Business.Entities
                     .SingleOrDefaultAsync(item => item.Username.Equals(username));
 
                 if (user is null)
-                    return null;
+                    return new UserAuthenticateTokenViewModel
+                    {
+                        Token = string.Empty,
+                        Roles = null
+                    };
 
                 if (!HashOptions.VerifyPasswordHash(password, user.Password))
-                    return null;
+                    return new UserAuthenticateTokenViewModel
+                    {
+                        Token = string.Empty,
+                        Roles = null
+                    };
 
                 var userRoles = await rolesBusiness.GetByUserId(user.id);
 

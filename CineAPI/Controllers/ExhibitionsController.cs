@@ -29,7 +29,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet]
-        [Authorize(Roles = "Get")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Exhibition>>> GetExhibitions()
             => Ok(await business.GetAll());
 
@@ -42,7 +42,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("paginate/{page}/{limitPage}")]
-        [Authorize(Roles = "Get")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Exhibition>>> GetExhibitiosPaginate(int page, int limitPage)
             => Ok(await business.GetAllPaginate(page, limitPage));
 
@@ -53,7 +53,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("details")]
-        [Authorize(Roles = "Get")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<ExhibitionDetailsViewModel>>> GetExhibitionsDetails()
             => Ok(await business.GetAllDetails());
 
@@ -65,7 +65,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("details/{id}")]
-        [Authorize(Roles = "Get")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<ExhibitionDetailsViewModel>>> GetExhibitionsDetailsById(int id)
             => Ok(await business.GetDetails(id));
 
@@ -95,7 +95,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("{id}")]
-        [Authorize(Roles = "Get")]
+        [AllowAnonymous]
         public async Task<ActionResult<Exhibition>> GetExhibition(int id)
         {
             Exhibition exhibition = await business.GetById(id);
@@ -114,7 +114,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("film/{id}")]
-        [Authorize(Roles = "Get")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Exhibition>>> GetByFilm(int id)
         {
             IEnumerable<Exhibition> exhibitions = await business.GetByFilm(id);
@@ -133,7 +133,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("room/{id}")]
-        [Authorize(Roles = "Get")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Exhibition>>> GetByRoom(int id)
         {
             IEnumerable<Exhibition> exhibitions = await business.GetByRoom(id);
@@ -152,7 +152,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("schedule/{id}")]
-        [Authorize(Roles = "Get")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Exhibition>>> GetBySchedule(int id)
         {
             IEnumerable<Exhibition> exhibitions = await business.GetBySchedule(id);

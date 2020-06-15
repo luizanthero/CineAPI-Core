@@ -138,7 +138,7 @@ namespace CineAPI.Business.Entities
         }
 
         public async Task<IEnumerable<User>> GetAll()
-            => await context.Users.Where(item => item.IsActived).ToListAsync();
+            => await context.Users.Include(item => item.UserRoles).Where(item => item.IsActived).ToListAsync();
 
         public async Task<PaginationViewModel<User>> GetAllPaginate(int page, int limitPage)
             => new PaginationViewModel<User>
@@ -146,17 +146,18 @@ namespace CineAPI.Business.Entities
                 Page = page,
                 LimitPage = limitPage,
                 TotalPages = await CountActived(),
-                Data = await context.Users.Where(item => item.IsActived).Skip((page - 1) * limitPage).Take(limitPage).ToListAsync()
+                Data = await context.Users.Include(item => item.UserRoles)
+                    .Where(item => item.IsActived).Skip((page - 1) * limitPage).Take(limitPage).ToListAsync()
             };
 
         public async Task<User> GetById(int id)
-            => await context.Users.FirstOrDefaultAsync(item => item.id == id);
+            => await context.Users.Include(item => item.UserRoles).FirstOrDefaultAsync(item => item.id == id);
 
         public async Task<User> GetByUsername(string username)
-            => await context.Users.FirstOrDefaultAsync(item => item.Username.Equals(username));
+            => await context.Users.Include(item => item.UserRoles).FirstOrDefaultAsync(item => item.Username.Equals(username));
 
         public async Task<User> GetByEmail(string email)
-            => await context.Users.FirstOrDefaultAsync(item => item.Email.Equals(email));
+            => await context.Users.Include(item => item.UserRoles).FirstOrDefaultAsync(item => item.Email.Equals(email));
 
         public async Task<IEnumerable<ComboBoxViewModel>> GetComboBox()
             => await context.Users.Where(item => item.IsActived)

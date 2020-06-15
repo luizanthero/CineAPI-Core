@@ -128,13 +128,13 @@ namespace CineAPI.Controllers
         /// <response code="500">Internal Error</response>
         [HttpPost("authenticate")]
         [AllowAnonymous]
-        public async Task<ActionResult<string>> Authenticate(UserAuthenticateViewModel user)
+        public async Task<ActionResult<UserAuthenticateTokenViewModel>> Authenticate(UserAuthenticateViewModel user)
         {
             try
             {
-                string token = await business.Authenticate(user.Username, user.Password);
+                var token = await business.Authenticate(user.Username, user.Password);
 
-                if (string.IsNullOrEmpty(token))
+                if (string.IsNullOrEmpty(token.Token))
                     return BadRequest("Username or Password is incorrect!");
 
                 return Ok(token);

@@ -50,7 +50,7 @@ namespace CineAPI.Business.Entities
             }
         }
 
-        public async Task<string> Authenticate(string username, string password)
+        public async Task<UserAuthenticateTokenViewModel> Authenticate(string username, string password)
         {
             try
             {
@@ -84,7 +84,11 @@ namespace CineAPI.Business.Entities
 
                 var stringToken = tokenHandler.CreateToken(tokenDescriptor);
 
-                return tokenHandler.WriteToken(stringToken);
+                return new UserAuthenticateTokenViewModel
+                {
+                    Token = tokenHandler.WriteToken(stringToken),
+                    Roles = userRoles.Select(item => item.id).ToList()
+                };
             }
             catch (Exception)
             {

@@ -172,7 +172,7 @@ namespace CineAPI.Controllers
         ///     {
         ///         "FilmId": 1,
         ///         "RoomId": 1,
-        ///         "Schedule": 1
+        ///         "ScheduleId": 1
         ///     }
         /// </remarks>
         /// <param name="exhibition"></param>

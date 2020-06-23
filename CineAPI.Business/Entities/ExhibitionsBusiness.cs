@@ -199,7 +199,7 @@ namespace CineAPI.Business.Entities
                 .Select(item => new ExhibitionDetailsViewModel()
                 {
                     id = item.id,
-                    Filme = item.Film.Name,
+                    Film = item.Film.Name,
                     ApiCode = item.Film.ApiCode,
                     Room = item.Room.Name,
                     Schedule = item.Schedule.Description,
@@ -213,7 +213,7 @@ namespace CineAPI.Business.Entities
                 .Select(item => new ExhibitionDetailsViewModel()
                 {
                     id = item.id,
-                    Filme = item.Film.Name,
+                    Film = item.Film.Name,
                     ApiCode = item.Film.ApiCode,
                     Room = item.Room.Name,
                     Schedule = item.Schedule.Description,

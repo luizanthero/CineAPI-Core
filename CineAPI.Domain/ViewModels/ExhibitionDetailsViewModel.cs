@@ -6,7 +6,7 @@ namespace CineAPI.ViewModels
     {
         public int id { get; set; }
 
-        public string Filme { get; set; }
+        public string Film { get; set; }
 
         public string ApiCode { get; set; }
 

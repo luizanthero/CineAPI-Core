@@ -169,8 +169,23 @@ namespace CineAPI.Controllers
         /// Sample request:
         ///     
         ///     {
-        ///         "Name": "Wonder Woman",
-        ///         "ApiCode": "tt0451279"
+        ///         "name": "Harry Potter and the Deathly Hallows: Part 2",
+        ///         "apiCode": "tt1201607",
+        ///         "year": "2011",
+        ///         "released": "15 Jul 2011",
+        ///         "runtime": "130 min",
+        ///         "genre": "Adventure, Drama, Fantasy, Mystery",
+        ///         "director": "David Yates",
+        ///         "writer": "Steve Kloves (screenplay), J.K. Rowling (novel)",
+        ///         "actors": "Ralph Fiennes, Michael Gambon, Alan Rickman, Daniel Radcliffe",
+        ///         "plot": "Harry, Ron, and Hermione search for Voldemort's remaining Horcruxes in their effort to destroy the Dark Lord as the final battle rages on at Hogwarts.",
+        ///         "language": "English",
+        ///         "country": "UK, USA",
+        ///         "awards": "Nominated for 3 Oscars. Another 45 wins. 91 nominations.",
+        ///         "poster": "https://m.media-amazon.com/images/M/MV5BMjIyZGU4YzUtNDkzYi00ZDRhLTljYzctYTMxMDQ4M2E0Y2YxXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_SX300.jpg",
+        ///         "type": "movie",
+        ///         "production": "Warner Bros. Pictures",
+        ///         "website": "N/A"
         ///     }
         ///     
         /// </remarks>

@@ -132,6 +132,8 @@ namespace CineAPI.Business.Entities
                                                                        {
                                                                            id = x.id,
                                                                            Film = x.Film.Name,
+                                                                           Poster = x.Film.Poster,
+                                                                           Year = x.Film.Year,
                                                                            ApiCode = x.Film.ApiCode,
                                                                            Room = x.Room.Name,
                                                                            Schedule = x.Schedule.Description,
@@ -173,6 +175,8 @@ namespace CineAPI.Business.Entities
                                                                  {
                                                                      id = x.id,
                                                                      Film = x.Film.Name,
+                                                                     Poster = x.Film.Poster,
+                                                                     Year = x.Film.Year,
                                                                      ApiCode = x.Film.ApiCode,
                                                                      Room = x.Room.Name,
                                                                      Schedule = x.Schedule.Description,

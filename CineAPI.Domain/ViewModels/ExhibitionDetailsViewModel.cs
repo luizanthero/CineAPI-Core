@@ -8,6 +8,10 @@ namespace CineAPI.ViewModels
 
         public string Film { get; set; }
 
+        public string Poster { get; set; }
+
+        public string Year { get; set; }
+
         public string ApiCode { get; set; }
 
         public string Room { get; set; }

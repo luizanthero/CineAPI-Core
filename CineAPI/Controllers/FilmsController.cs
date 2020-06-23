@@ -65,7 +65,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("details/{id}")]
-        [Authorize(Roles = "Get")]
+        [AllowAnonymous]
         public async Task<ActionResult<FilmDetailsViewModel>> GetFilmDetails(int id)
             => Ok(await business.GetDetails(id));
 

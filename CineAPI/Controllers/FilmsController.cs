@@ -95,7 +95,7 @@ namespace CineAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="500">Internal Error</response>
         [HttpGet("{id}")]
-        [Authorize(Roles = "Get")]
+        [AllowAnonymous]
         public async Task<ActionResult<Film>> GetFilm(int id)
         {
             Film film = await business.GetById(id);

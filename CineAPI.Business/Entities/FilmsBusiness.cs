@@ -170,6 +170,17 @@ namespace CineAPI.Business.Entities
                                                      id = film.id,
                                                      Name = film.Name,
                                                      ApiCode = film.ApiCode,
+                                                     Plot = film.Plot,
+                                                     Actors = film.Actors,
+                                                     Awards = film.Awards,
+                                                     Director = film.Director,
+                                                     Poster = film.Poster,
+                                                     Production = film.Production,
+                                                     Runtime = film.Runtime,
+                                                     Website = film.Website,
+                                                     Writer = film.Writer,
+                                                     Year = film.Year,
+                                                     Genre = film.Genre,
                                                      Exhibitions = exhibitions
                                                  }).FirstOrDefaultAsync();
 

@@ -4,6 +4,41 @@
         <name>CineAPI</name>
     </assembly>
     <members>
+        <member name="M:CineAPI.Controllers.AuthenticationController.Register(CineAPI.ViewModels.UserRegisterViewModel)">
+            <summary>
+            Register a User
+            </summary>
+            <remarks>
+            Sample request:
+            
+                {
+                    "Username": "teste",
+                    "Email": "teste@teste.com",
+                    "Password": "teste"
+                }
+            </remarks>
+            <param name="user"></param>
+            <returns>Return a register user</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
+        <member name="M:CineAPI.Controllers.AuthenticationController.Authenticate(CineAPI.ViewModels.UserAuthenticateViewModel)">
+            <summary>
+            Authenticate a User
+            </summary>
+            <remarks>
+            Sample request:
+            
+                {
+                    "Username": "teste",
+                    "Password": "teste"
+                }
+            </remarks>
+            <param name="user"></param>
+            <returns>Return a Valid Token</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
         <member name="M:CineAPI.Controllers.ExhibitionsController.GetExhibitions">
             <summary>
             Get all Exhibitions created
@@ -728,41 +763,6 @@
             </summary>
             <param name="id"></param>
             <returns>Return a User</returns>
-            <response code="200">Success</response>
-            <response code="500">Internal Error</response>
-        </member>
-        <member name="M:CineAPI.Controllers.UsersController.Register(CineAPI.ViewModels.UserRegisterViewModel)">
-            <summary>
-            Register a User
-            </summary>
-            <remarks>
-            Sample request:
-            
-                {
-                    "Username": "teste",
-                    "Email": "teste@teste.com",
-                    "Password": "teste"
-                }
-            </remarks>
-            <param name="user"></param>
-            <returns>Return a register user</returns>
-            <response code="200">Success</response>
-            <response code="500">Internal Error</response>
-        </member>
-        <member name="M:CineAPI.Controllers.UsersController.Authenticate(CineAPI.ViewModels.UserAuthenticateViewModel)">
-            <summary>
-            Authenticate a User
-            </summary>
-            <remarks>
-            Sample request:
-            
-                {
-                    "Username": "teste",
-                    "Password": "teste"
-                }
-            </remarks>
-            <param name="user"></param>
-            <returns>Return a Valid Token</returns>
             <response code="200">Success</response>
             <response code="500">Internal Error</response>
         </member>

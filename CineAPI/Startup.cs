@@ -71,6 +71,7 @@ namespace CineAPI
                             maxRetryDelay: TimeSpan.FromSeconds(30),
                             errorNumbersToAdd: null
                         );
+                    options.MigrationsAssembly("CineAPI");
                 }));
 
             services.AddSwaggerGen(item =>

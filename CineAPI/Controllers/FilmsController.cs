@@ -162,6 +162,19 @@ namespace CineAPI.Controllers
             return Ok(films);
         }
 
+
+        /// <summary>
+        /// Return a list of films validated
+        /// </summary>
+        /// <param name="films"></param>
+        /// <returns>Return a list of films</returns>
+        /// <response code="200">Success</response>
+        /// <response code="500">Internal Error</response>
+        [HttpPost("isExist")]
+        [Authorize(Roles = "Get")]
+        public async Task<ActionResult<IEnumerable<dynamic>>> IsExist(IEnumerable<FilmOmbd> films)
+            => Ok(await business.IsExistFilms(films));
+
         /// <summary>
         /// Create a Film
         /// </summary>

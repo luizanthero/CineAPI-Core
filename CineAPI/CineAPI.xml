@@ -242,6 +242,15 @@
             <response code="200">Success</response>
             <response code="500">Internal Error</response>
         </member>
+        <member name="M:CineAPI.Controllers.FilmsController.IsExist(System.Collections.Generic.IEnumerable{CineAPI.Models.FilmOmbd})">
+            <summary>
+            Return a list of films validated
+            </summary>
+            <param name="films"></param>
+            <returns>Return a list of films</returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Error</response>
+        </member>
         <member name="M:CineAPI.Controllers.FilmsController.PostFilm(CineAPI.Models.Film)">
             <summary>
             Create a Film

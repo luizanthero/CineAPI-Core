@@ -4,6 +4,7 @@ using CineAPI.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -84,6 +85,27 @@ namespace CineAPI.Business.Entities
 
         public async Task<bool> IsExist(int id)
             => await context.Films.AnyAsync(item => item.id == id);
+
+        private async Task<bool> IsExistByApiCode(string apiCode)
+            => await context.Films.AnyAsync(item => item.ApiCode.Equals(apiCode));
+
+        public async Task<IEnumerable<dynamic>> IsExistFilms(IEnumerable<FilmOmbd> films)
+        {
+            var result = new List<dynamic>();
+
+            foreach (var item in films)
+            {
+                dynamic res = new ExpandoObject();
+                res.Title = item.Title;
+                res.Year = item.Year;
+                res.Type = item.Type;
+                res.ApiCode = item.imdbID;
+                res.Exist = await IsExistByApiCode(item.imdbID);
+                result.Add(res);
+            }
+
+            return result;
+        }
 
         public async Task<bool> Update(Film entity)
         {
